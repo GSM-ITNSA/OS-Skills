@@ -28,6 +28,11 @@
 
 <img src="./Image/DNS1.png" alt="Alt123" width="600">
 
+### 0. Local Computer Cache 확인
+
+- Cache가 있는데 질의를 하면 손해를 보는것이 당연하다.
+- 이 Cache의 유지 시간은 300s 이다.
+
 ### 1. hosts 파일 확인
 
 - hosts 파일에 자신이 원하는 IP 주소와 Domain name의 mapping이 있는지 확인한다.
