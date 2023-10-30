@@ -35,7 +35,7 @@ ex ) 디스크 작업 (하드 디스크 또는 SSD에서 데이터를 읽거나 
 - 하지만 하나의 디스크라도 문제가 발생할 경우 전체 RAID가 깨지는 일이 발생한다.
 - 그리고 안정성은 1/N으로 줄어든다.
 
-## RAID 1D
+## RAID 1
 
 <img src="./Image/RAID1.png" alt="Alt123" width="600">
 
@@ -72,8 +72,41 @@ ex ) 디스크 작업 (하드 디스크 또는 SSD에서 데이터를 읽거나 
 - Error 감지를 위해서 패리티를 2개의 디스크에 저장한다.
 - 또한, 패리티 저장은 고정된 디스크에 하지 않고, 매번 다른 디스크에 저장을 한다.
 
+## RAID 10
+
+<img src="./Image/RAID10.png" alt="Alt123" width="600">
+
+- RAID 10은 RAID0과 RAID1을 합친 방식이다.
+- RAID0의 Data Striping과 RAID1의 Data Mirroring을 도입한 기술이다.
+- RAID10은 Data가 Mirroring 되므로 `데이터의 안정성`을 높인다. 왜냐하면 하나의 디스크가 고장나더라도 Mirroring된 데이터로 복구할 수 있기 떄문이다.
+- RAID10은 Data Striping을 통해 `입출력 성능`을 높여준다. 왜냐하면 Striping이 되어있으면 여러 디스크에서 동시에 데이터를 읽거나 쓸 수 있기 때문이다.
+- 또한 Data Striping을 통해서 여러 디스크에 Balancing하게 Data들이 분산이 되면 입출력 작업이 균형을 이루게 되면서 성능이 빨라진다.
+
+```bash
+Striping : 데이터를 분산해서 병렬화 시키는 작업.
+Mirroring : 같은 데이터를 복제하는 작업. (Backup의 개념)
+``` 
+
 ## Parity Bits
 
 - RAID5와 RAID6에서 RAID를 구성할 때 Parity Bits가 자동으로 생성이 된다.
 - RAID5와 RAID6은 Data와 Parity 정보를 조합해서 Data의 안정성과 회복성을 제공한다.
 - 따라서 하나의 디스크가 터지더라도 그 디스크의 Parity Bits로 Data를 복구 할 수 있다.
+
+---
+
+### Hardware Raid
+
+- 말 그대로 `Hardware`적으로 Raid를 구성하는 방법이다.
+- 별도의 RAID 컨트롤러를 사용하여 구성하게 되며, RAID 컨트롤러에서 Disk 구성을 한 후 OS에게 전달하는 방식이다.
+- 그러므로 OS는 해당 디스크가 RAID 구성의 유무를 알 수가 없다.
+- OS가 RAID에 관여하지 않고 또, 별도의 Hardware가 RAID관련 설정을 하기 때문에 Software RAID보다 더 나은 성능을 기대할 수 있다.
+- 단, RAID 컨트롤러를 이중화 하지 않을 경우, Controller의 손상만으로 DIsk 전체를 사용할 수 없게 된다.
+
+### Software Raid
+
+- RAID Controller가 담당하는 것이 아닌 `OS가 RAID를 담당`하는 설정이다.
+- 별도의 RAID Controller가 없어서 비용적인 문제에서는 조금 더 나을수 있지만, Hardware RAID 방식에 비해 성능은 더 낮다.
+- Windows : 동적디스크 사용
+- Unix 계열 : LVM 사용
+- (LVM을 사용하면 성능차이가 거의 없다고 하지만, Windows에서 Software Raid를 사용하면 성능도 차이날 뿐더러 복구시에 안정성도 낮다고 한다.)

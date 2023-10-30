@@ -72,7 +72,7 @@
 1. User PI가 Server PI에게 연결 여부를 묻는 Command를 전송한다.
 2. Server PI는 Command에 대한 Reply를 전송한다.
 3. 명령을 받은 Server는 Reply를 전송하면서 Data Connections를 생성한다. 
-4. 생성된 Data Connection을 생성하여 User와 연결하면서 데이터를 주고받는다.
+4. Server는 Data Connection을 생성하여 User와 연결하면서 데이터를 주고받는다.
 5. 데이터 송수신을 끝내면 Data Connection을 다시 제거한다.
 
 - 이런 식으로 동작하기 때문에 Data를 주고받는 Port 20번은 Data를 주고 받을 때만 연결이 되고 Control Port인 21번은 첫 연결부터 Server과 Client간의 연결이 끊어질 때까지 연결이 되어있는다.
@@ -88,7 +88,7 @@
 <img src="./Image/FTP2.png" alt="Alt123" width="600">
 
 1. FTP Client는 FTP Server의 21번 포트에 대한 연결 요청을 Server로 전송한다.
-    1. 이때 자신의 Data Port가 6121번 포트라고 패킷에 포함하여 전송한다.
+    1. 이때 자신의 Data Port가 6121번 포트라고 패킷에 포함하여 전송한다
 2. FTP Server는 연결 요청에 대한 응답을 FTP Client에 보낸다.
 3. 연결이 완료가 되었으면 FTP Server는 FTP Client로부터 받은 Client의 Data Port(6121)에 연결을 요청한다. 
 4. FTP Client는 Server로부터 온 연결 요청에 대한 응답을 보낸다.
