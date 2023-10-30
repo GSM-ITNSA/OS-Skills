@@ -35,7 +35,7 @@
 
 - LDAP Directory를 구축하고 관리할 수 있는 CLI 기반의 서버이다.
 - LDAP이 개발되고 이를 활용하는 최초의 오픈소스 LDAP 서버로 지금까지 계속 활용중이다.
-- OpnLDAP은 LDAP 기능만을 제공하고 있어 확장성이 매우 뛰어나다.
+- OpenLDAP은 LDAP 기능만을 제공하고 있어 확장성이 매우 뛰어나다.
 
 ### 2. Apache Directory Server
 
