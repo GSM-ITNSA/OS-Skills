@@ -72,7 +72,7 @@
 1. User PI가 Server PI에게 연결 여부를 묻는 Command를 전송한다.
 2. Server PI는 Command에 대한 Reply를 전송한다.
 3. 명령을 받은 Server는 Reply를 전송하면서 Data Connections를 생성한다. 
-4. 생성된 Data Connection을 생성하여 User와 연결하면서 데이터를 주고받는다.
+4. Server는 Data Connection을 생성하여 User와 연결하면서 데이터를 주고받는다.
 5. 데이터 송수신을 끝내면 Data Connection을 다시 제거한다.
 
 - 이런 식으로 동작하기 때문에 Data를 주고받는 Port 20번은 Data를 주고 받을 때만 연결이 되고 Control Port인 21번은 첫 연결부터 Server과 Client간의 연결이 끊어질 때까지 연결이 되어있는다.
