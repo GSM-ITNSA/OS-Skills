@@ -88,7 +88,7 @@
 <img src="./Image/FTP2.png" alt="Alt123" width="600">
 
 1. FTP Client는 FTP Server의 21번 포트에 대한 연결 요청을 Server로 전송한다.
-    1. 이때 자신의 Data Port가 6121번 포트라고 패킷에 포함하여 전송한다.
+    1. 이때 자신의 Data Port가 6121번 포트라고 패킷에 포함하여 전송한다
 2. FTP Server는 연결 요청에 대한 응답을 FTP Client에 보낸다.
 3. 연결이 완료가 되었으면 FTP Server는 FTP Client로부터 받은 Client의 Data Port(6121)에 연결을 요청한다. 
 4. FTP Client는 Server로부터 온 연결 요청에 대한 응답을 보낸다.
