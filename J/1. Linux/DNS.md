@@ -1,10 +1,10 @@
 # BIND9_basic
-### What is BIND
+### BIND 란 ?
 ```
 BIND는 DNS 서비스를 위한 모든 기능을 갖춘 확장 가능한 오픈 소스 소프트웨어
 BIND9은 DNS 네임 서버를 구축하고 레코드를 관리할 수 있도록 도와주는 패키지
 ```
-### BIND9 Configuration File
+### BIND9 구성 파일
 ```
 named.conf 파일은 BIND9의 기본 구성 파일이다.
 /etc/bind/named.conf.options 파일에는 구성에 필요한 옵션을 지정할 수 있는 위치에 대한 참조가 포함되어 있으며 네 가지를 수정하여 BIND9을 구성할 수 있다.
@@ -14,9 +14,10 @@ named.conf 파일은 BIND9의 기본 구성 파일이다.
 
 2. allow-query {<범위>} : 서버에 DNS 쿼리를 보낼 수 있는 IP 주소를 정의하는 지시문
 (정의 하지 않으면 기본적으로 모든 클라이언트의 DNS 쿼리를 허용함)
+(ACL 이름을 범위에 넣어 쿼리를 지정 할 수 있음)
 
 3. forwarders {<범위>} : 이 서버가 재귀 쿼리를 전달할 DNS 서버를 정의하는 지시문
-(정의 하지 않아도 recursion 방식으로 동작)
+(정의 하지 않아도 recursion 방식으로 동작) 
 
 4. recursion <yes/no> : 서버에 대한 재귀적인 DNS 쿼리를 허용하는 지시문 
 (recursion no 를 할 경우 iterative DNS 쿼리를 허용함)
@@ -25,8 +26,20 @@ named.conf 파일은 BIND9의 기본 구성 파일이다.
 모든 configuration 이 끝난 경우 bind9 을 재시작 해줘야 한다.
 ```
 
-### Client Configuration
+---
+# BIND9_view
+### VIEW 란 ?
 ```
-1. IP 와 local server address 를 정의
-2. nslookup 을 통해 쿼리가 되는지 확인
+DNS 뷰는 동일한 DNS 서버에서 다른 관점으로 다른 DNS 데이터를 제공하는 방법을 제공
+
+예를 들면 내부 뷰는 내부 네트워크에서만 볼 수 있게 설정하고, 외부 뷰는 외부 네트워크에서만 볼 수 있게 설정할 수 있다.
+
+뷰를 사용하면 DNS 서버가 서로 다른 클라이언트 또는 네트워크 그룹에 대해 다른 DNS 데이터를 반환할 수 있기 때문에 내부/외부 네트워크 관리등에 유용하고 보안, 성능에 대한 요구사항을 충족 시킬 수 있다.
+```
+
+### VIEW 구성 파일
+```
+named.conf 에서 VIEW 를 구성할 수 있다.
+view 는 관점에 따라 분류되기 때문에 BIND9 구성파일에 사용한 옵션을 구분해서 적을 수 있다.
+(view 에서 쓰는게 일반적인 match-clients 도 있긴 함)
 ```
