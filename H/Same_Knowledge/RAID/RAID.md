@@ -35,7 +35,7 @@ ex ) 디스크 작업 (하드 디스크 또는 SSD에서 데이터를 읽거나 
 - 하지만 하나의 디스크라도 문제가 발생할 경우 전체 RAID가 깨지는 일이 발생한다.
 - 그리고 안정성은 1/N으로 줄어든다.
 
-## RAID 1D
+## RAID 1
 
 <img src="./Image/RAID1.png" alt="Alt123" width="600">
 
@@ -71,6 +71,21 @@ ex ) 디스크 작업 (하드 디스크 또는 SSD에서 데이터를 읽거나 
 - RAID 5에서 성능과 용량을 좀 더 줄이고 안정성을 좀 더 높인 방식이다.
 - Error 감지를 위해서 패리티를 2개의 디스크에 저장한다.
 - 또한, 패리티 저장은 고정된 디스크에 하지 않고, 매번 다른 디스크에 저장을 한다.
+
+## RAID 10
+
+<img src="./Image/RAID10.png" alt="Alt123" width="600">
+
+- RAID 10은 RAID0과 RAID1을 합친 방식이다.
+- RAID0의 Data Striping과 RAID1의 Data Mirroring을 도입한 기술이다.
+- RAID10은 Data가 Mirroring 되므로 `데이터의 안정성`을 높인다. 왜냐하면 하나의 디스크가 고장나더라도 Mirroring된 데이터로 복구할 수 있기 떄문이다.
+- RAID10은 Data Striping을 통해 `입출력 성능`을 높여준다. 왜냐하면 Striping이 되어있으면 여러 디스크에서 동시에 데이터를 읽거나 쓸 수 있기 때문이다.
+- 또한 Data Striping을 통해서 여러 디스크에 Balancing하게 Data들이 분산이 되면 입출력 작업이 균형을 이루게 되면서 성능이 빨라진다.
+
+```bash
+Striping : 데이터를 분산해서 병렬화 시키는 작업.
+Mirroring : 같은 데이터를 복제하는 작업. (Backup의 개념)
+``` 
 
 ## Parity Bits
 
