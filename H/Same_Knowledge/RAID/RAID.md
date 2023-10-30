@@ -92,3 +92,21 @@ Mirroring : 같은 데이터를 복제하는 작업. (Backup의 개념)
 - RAID5와 RAID6에서 RAID를 구성할 때 Parity Bits가 자동으로 생성이 된다.
 - RAID5와 RAID6은 Data와 Parity 정보를 조합해서 Data의 안정성과 회복성을 제공한다.
 - 따라서 하나의 디스크가 터지더라도 그 디스크의 Parity Bits로 Data를 복구 할 수 있다.
+
+---
+
+### Hardware Raid
+
+- 말 그대로 `Hardware`적으로 Raid를 구성하는 방법이다.
+- 별도의 RAID 컨트롤러를 사용하여 구성하게 되며, RAID 컨트롤러에서 Disk 구성을 한 후 OS에게 전달하는 방식이다.
+- 그러므로 OS는 해당 디스크가 RAID 구성의 유무를 알 수가 없다.
+- OS가 RAID에 관여하지 않고 또, 별도의 Hardware가 RAID관련 설정을 하기 때문에 Software RAID보다 더 나은 성능을 기대할 수 있다.
+- 단, RAID 컨트롤러를 이중화 하지 않을 경우, Controller의 손상만으로 DIsk 전체를 사용할 수 없게 된다.
+
+### Software Raid
+
+- RAID Controller가 담당하는 것이 아닌 `OS가 RAID를 담당`하는 설정이다.
+- 별도의 RAID Controller가 없어서 비용적인 문제에서는 조금 더 나을수 있지만, Hardware RAID 방식에 비해 성능은 더 낮다.
+- Windows : 동적디스크 사용
+- Unix 계열 : LVM 사용
+- (LVM을 사용하면 성능차이가 거의 없다고 하지만, Windows에서 Software Raid를 사용하면 성능도 차이날 뿐더러 복구시에 안정성도 낮다고 한다.)
