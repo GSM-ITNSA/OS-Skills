@@ -108,16 +108,8 @@
 
 ## Load Balancing의 주요 기능
 
-### 1. NAT
 
-- 사설 IP 주소 → 공인 IP 주소로 변환.
-
-### 2. Tunneling
-
-- 인터넷 상에서 보이지 않는 경로를 만들어 통신할 수 있게 하는 개념.
-- 데이터는 `캡슐화`해서 연결된 상호 간에만 캡슐화된 패킷을 구별해 캡슐화를 해제할 수 있음.
-
-### 3. DSR(Dynamic Source Routing Protocol)
+### DSR(Dynamic Source Routing Protocol)
 
 - Load Balancer 사용 시 서버에서 Client로 되돌아가는 경우 목적지 주소를 Network SW 주소 아닌 Client의 주소로 변환하여 Network SW를 거치지 않고 Direct로 바로 쏴주는 기술.
 - 아래는 DSR의 예시이다.
