@@ -136,4 +136,16 @@ Zone 에는 Type 이 여러가지 있다.
 8. Dynamically Updateable Zone (Dynamic Zone)
     동적으로 업데이트될 수 있으며, 주로 다이나믹 DNS 업데이트 프로토콜을 사용하여 동적
     호스트 레코드를 관리하는데 사용
+
+9. Hint Zone 
+    root 서버의 레코드 정보가 적혀있는 파일을 참조하여 root 서버의 위치를 알게 해줌
 ```
+
+## Master Zone
+1. DNS 데이터를 주되게 관리하며 신뢰할 수 있는 답변을 제공
+
+
+## Slave Zone
+1. 데이터 복제 : Master Zone 에서 복사한 데이터를 미러링하고 동일한 정보를 저장한다.
+2. 고가용성 : Master Zone 가 shutdown 되어도 복제한 데이터를 미리 저장해 놓았기 때문에 Slave Zone 에서는 여전히 DNS 쿼리를 처리 할 수 있으므로 서비스의 지속성을 보장한다.
+3. 분산 데이터 배포 : 여러개의 Slave Zone를 사용하여 동일한 정보를 여러 지역 또는 서버에 분산하여 로드 밸런싱 효과를 얻을 수 있다.
