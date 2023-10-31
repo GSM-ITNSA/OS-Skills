@@ -1,7 +1,7 @@
 # Failover란 ?
 
 - Failover는 `장애 대비 기능`을 말한다. 실패(fail)를 끝내는 것(over)이다.
-- 하나의 System에서 장애가 생기면 다른 System으로 대체해서 운영하는 것이다.
+- 하나의 System에서 장애가 생기면 똑같은 설정을 가진 예비 System으로 대체해서 운영하는 것이다.
 
 ## Failover의 정의
 
@@ -68,3 +68,10 @@
 ## SwitchOver
 
 - 이건 반대로 Active 장비를 Passive 상태로 바꾸는 기술을 말한다.
+
+```markdown
+예를 들어, Active 장비를 서비스를 운영 중일 때 ...
+
+Passive 장비의 SW & HW 적인 성능을 높였다. 
+그럼 Passive 장비를 Active 장비로 변환해서 서비스를 운영하는것이 더 효율적이기 때문에 SwitchOver를 사용하는 것이다. 
+```
