@@ -55,6 +55,49 @@
 
 - 이때 여러대의 Server에게 균등하게 Traffic을 분산시켜주는 역할을 하는것이 `Load Balancer`이다.
 
+## Horizontal (수평) vs Vertical (수직) Scaling
+
+- 어떤 방식으로 계획하고 확장하는 것이 좋은 방법인지는 각 환경에 다르겠지만 무슨 방식이 더 효율인지에 판단은 필수적이다.
+- Kubernetes에서 리소스 부족을 처리하기 위해, Auto-Scaler를 사용한다. Kubernetes는 용도에 따라 몇가지 다른  Auto-Scaler를 제공하는데 이때 나오는 개념이 수평확장과 수직확장이다.
+- Kubernetes의 Auto-Scaler는 수평, 수직 확장의 이해를 돕기 위해 적어 놓은 것이다. 확장을 사용하는 예시일 뿐이다. 자세한건 Kubernetes를 공부할 때 알아보겠다.
+
+<img src="./Image/LB7.png" alt="Alt123" width="600">
+
+
+### Horizontally (수평)
+
+- 동일한 시스템(상대적으로 수직 확장보다 낮은 성능의 시스템)을 병렬의 형태로 확장한다.
+- Scale
+- Load Balancer를 통해 Request 요청을 각각의 System으로 분산하여 처리할 수 있도록 한다.
+- MSA,EKS같은 Ocastration 기술이 발달하게 된 계기이다.
+
+```markdown
+아래의 예시는 쿠버네티스에서 제공하는 Scaling 방식 중 하나인 **HPA(Horizontal Pod Auto-scaler)** 이다.
+
+* VPA가 Pod의 Resource를 더 할당해서 Scaling을 하는 기능이라면, HPA는 Pod의 수를 늘리는 것이다.
+* Pod의 CPU나 Memory같은 리소스 지표들이 지정해놓은 임계점을 지나면 Pod의 수를 늘리는 방식이다. 
+```
+
+<img src="./Image/LB8.png" alt="Alt123" width="600">
+
+
+### Vertical (수직)
+
+- 기존 시스템에 더 많은 Resource를 추가하는 방식
+    - CPU,RAM,Storage,Power 등등
+- 현재 사용하고 있는 Application을 수정할 필요가 없다.
+- 하지만 물리적인 Resource 업그레이드의 한계가 존재한다.
+
+```markdown
+아래의 예시는 쿠버네티스에서 제공하는 Scaling 방식 중 하나인 **VPA(Vertical Pod Auto-scaler)** 이다.
+
+* 간단하게 알아보면, Pod의 Resource(CPU,Memory 등등..)를 추가하여 수직의 방향으로 커지는 것이다.
+* Pod의 Resource가 부족한 경우 Pod를 Restart하며 Pod의 Resource를 증가시킨다. 
+```
+
+<img src="./Image/LB9.png" alt="Alt123" width="600">
+
+
 ---
 
 ## Load Balancing
@@ -65,16 +108,8 @@
 
 ## Load Balancing의 주요 기능
 
-### 1. NAT
 
-- 사설 IP 주소 → 공인 IP 주소로 변환.
-
-### 2. Tunneling
-
-- 인터넷 상에서 보이지 않는 경로를 만들어 통신할 수 있게 하는 개념.
-- 데이터는 `캡슐화`해서 연결된 상호 간에만 캡슐화된 패킷을 구별해 캡슐화를 해제할 수 있음.
-
-### 3. DSR(Dynamic Source Routing Protocol)
+### DSR(Dynamic Source Routing Protocol)
 
 - Load Balancer 사용 시 서버에서 Client로 되돌아가는 경우 목적지 주소를 Network SW 주소 아닌 Client의 주소로 변환하여 Network SW를 거치지 않고 Direct로 바로 쏴주는 기술.
 - 아래는 DSR의 예시이다.
