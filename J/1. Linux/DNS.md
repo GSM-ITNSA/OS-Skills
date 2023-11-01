@@ -88,13 +88,19 @@ view 는 관점에 따라 분류되기 때문에 BIND9 구성파일에 사용한
 
 ```
 1. include 명령을 통해 다른 구성 파일인 named.conf.options 를 참조
+
 2. View "internal" , view "external" 로 나눠 내부 클라이언트의 DNS 레코드와 외부 클라이언트의 DNS 레코드를 구분
+
 3. View "internal" 에는 192.168.0.0/24, 192.168.1.0/24, 127.0.0.1 네트워크 대역만 DNS 쿼리가 가능하게 나누어 주고 View "external" 에는 내부 네트워크를 제외한 모든 네트워크에 대한 쿼리를 허용
 ( 127.0.0.1 은 localhost 주소로 DNS 서버가 내부 DNS 레코드와 쿼리가 가능하게 설정 )
+    - localhost 는 사용자가 정의 해준 127.0.0.1 의 Domain Name 이라고 생각하면 편함
+
 4. corporate.local Zone 과 corporate.com Zone 을 만들어 내부 쿼리와 외부 쿼리를 나눈다.
+
 5. zone 의 Type `master` 로 하고 zone 구성 파일은 local-zone, com-zone 으로 한다
 (type 에 대해서는 Same_Knowledge 에 자세히 설명)
 (file의 기본 디렉토리는 /var/cache/bind/ 밑에 둔다 )
+
 6. zone을 간단히 구성하면 내부 클라이언트(network 가 192.168.0.0/24, 192.168.1.0/24)에서는 내부 zone 에 구성한 DNS 데이터에, 외부 클라이언트(내부 외의 모든 네트워크)에서는 외부 zone 에 구성한 DNS 데이터에 쿼리를 할 수 있게 된다.
 ( zone 구성은 나중에 다시 설명하면서 이어서 만들 예정 )
 ```
@@ -173,6 +179,19 @@ Zone 에는 Type 이 여러가지 있다.
 1. 데이터 복제 : Master Zone 에서 복사한 데이터를 미러링하고 동일한 정보를 저장한다.
 2. 고가용성 : Master Zone 가 shutdown 되어도 복제한 데이터를 미리 저장해 놓았기 때문에 Slave Zone 에서는 여전히 DNS 쿼리를 처리 할 수 있으므로 서비스의 지속성을 보장한다.
 3. 분산 데이터 배포 : 여러개의 Slave Zone를 사용하여 동일한 정보를 여러 지역 또는 서버에 분산하여 로드 밸런싱 효과를 얻을 수 있다.
+- Master zone 이 업데이트가 될 경우
+  - Slave Server 에서 DNS 프로토콜의 AXFR(Zone Transfer) 또는 IXFR(Incremental Zone Transfer) 를 사용함으로써 Slave Zone 을 업데이트 한다
+  - 중요한 점은 Slave DNS 서버가 주기적으로 Master DNS 서버로부터 변경된 존 파일을 가져오거나 새로 고침하는 데 의존한다는 것, Slave 존은 적기에 업데이트를 받아와야 함
+  - 이러한 주기를 적절하게 구성하면 Master 및 Slave 간의 DNS 데이터 일관성을 유지할 수 있음
+- Slave Server 의 보안설정
+  - 누구든지 Master Server에서 zone을 받아와서 Slave Server가 되는 경우 보안에 문제가 생길 수 있기에 주의 해야 한다.
+  - 우선 DNS 데이터 전송을 보호하기 위해 TSIG 를 사용하여 인증을 수행하고 데이터를 암호화
+  - Master DNS 서버에서 Slave DNS 서버로 전송되는 데이터가 네트워크에서 안전하게 전송되도록 네트워크 액세스를 제한 (방화벽 또는 ACL을 사용하여 허용된 IP 주소만이 데이터를 받도록 설정)
+  - Slave DNS 서버는 데이터를 받기만 하고 수정 권한이 없어야 함 (데이터를 수신하는 서버가 수정할 수 없도록 설정)
+  - 시스템을 업데이트하고 모니터링하여 보안 취약점을 식별하고 보안 업데이트를 적용
+  - Master와 Slave 간의 통신은 안전한 채널을 통해 이루어져야 함 (일반적으로 VPN 또는 SSH를 사용하여 통신을 보호)
+  - 
+
 ### Slave_example (View 와 연결되어 있음 Slave_Server)
 <img src="./Images/Slave_zone.png">
 
@@ -185,3 +204,4 @@ Zone 에는 Type 이 여러가지 있다.
 
 - SlaveUser1은 서버의 위치를 192.168.1.1(Slave_server 의 IP) 로 설정해놔야함
 - User1 처럼 Master_server에서 구성한대로 나옴
+
