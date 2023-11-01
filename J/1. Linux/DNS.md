@@ -82,7 +82,8 @@ named.conf 에서 VIEW 를 구성할 수 있다.
 view 는 관점에 따라 분류되기 때문에 BIND9 구성파일에 사용한 옵션을 구분해서 적을 수 있다.
 (view 에서 쓰는게 일반적인 match-clients 도 있긴 함)
 ```
-## VIEW Example
+## VIEW Example 
+### Server
 <img src="./Images/view.png" >
 
 ```
@@ -97,6 +98,12 @@ view 는 관점에 따라 분류되기 때문에 BIND9 구성파일에 사용한
 6. zone을 간단히 구성하면 내부 클라이언트(network 가 192.168.0.0/24, 192.168.1.0/24)에서는 내부 zone 에 구성한 DNS 데이터에, 외부 클라이언트(내부 외의 모든 네트워크)에서는 외부 zone 에 구성한 DNS 데이터에 쿼리를 할 수 있게 된다.
 ( zone 구성은 나중에 다시 설명하면서 이어서 만들 예정 )
 ```
+### 결과(EXTUser {IP : 1.1.1.1})
+
+<img src="./Images/view_EXTUser.png">
+
+- EXTUser는 네트워크 대역이 사설이 아닌 네트워크이기 때문에 corporate.com에 쿼리가 됨
+- view "internal" 은 네트워크 대역이 정해져 있기 때문에 쿼리를 하지 못함
 ---
 # BIND9_Master&Slave
 ### Zone
@@ -143,9 +150,38 @@ Zone 에는 Type 이 여러가지 있다.
 
 ## Master Zone
 1. DNS 데이터를 주되게 관리하며 신뢰할 수 있는 답변을 제공
+### Master_example (View 쪽과 연결되어있음 Server)
+<img src="./Images/Master_zone.png" >
+
+- 도메인이 corporate.local 인 Zone 을 만듬
+- Type 은 Master로 주최되는 Zone
+- file 은 local-zone이라는 파일에 저장
+
+<img src="./Images/Master_zone2.png" >
+
+- ns.corporate.local 은 corporate.local 의 네임서버의 위치를 의미함
+- ns.corporate.local, www.corporate.local 의 Domain Name 을 192.168.0.1 로 해석해줌 
+#### 결과 (User1)
+
+<img src="./Images/Master_zone_user.png" >
+
+- User1은 서버의 위치를 192.168.0.1 로 설정해놔야함
+- local-zone 파일에 구성한대로 ns.corporate.local, www.corporate.local 모두 192.168.0.1 로 해석
 
 
 ## Slave Zone
 1. 데이터 복제 : Master Zone 에서 복사한 데이터를 미러링하고 동일한 정보를 저장한다.
 2. 고가용성 : Master Zone 가 shutdown 되어도 복제한 데이터를 미리 저장해 놓았기 때문에 Slave Zone 에서는 여전히 DNS 쿼리를 처리 할 수 있으므로 서비스의 지속성을 보장한다.
 3. 분산 데이터 배포 : 여러개의 Slave Zone를 사용하여 동일한 정보를 여러 지역 또는 서버에 분산하여 로드 밸런싱 효과를 얻을 수 있다.
+### Slave_example (View 와 연결되어 있음 Slave_Server)
+<img src="./Images/Slave_zone.png">
+
+- 도메인이 corporate.local 인 Zone 을 만듬
+- Type 은 Slave 로 주권이 없으며 주기적으로 Master 서버로부터 존 전송을 요청하도록 구성됨
+- masters \<Master 서버 IP> 옵션을 사용하여 마스터의 위치를 찾아줌
+- BIND9 시스템을 재시작하면 자동으로 local-zone 파일이 만들어지고 master zone에서 데이터를 받아와 저장해 놓지만 직접 들어가면 보기 어렵게 나옴
+#### 결과 (SlaveUser1)
+<img src="./Images/Slave_zone_user.png">
+
+- SlaveUser1은 서버의 위치를 192.168.1.1(Slave_server 의 IP) 로 설정해놔야함
+- User1 처럼 Master_server에서 구성한대로 나옴
