@@ -26,7 +26,7 @@ Samba는 파일을 제외한 많은 Resource들을 공유할 수 있다.
 - 공유된 암호화 Directory ( Samba는 공유된 Directory를 암호화하여 공유할 수 있)
 - SQL Database (Samba는 SQL DataBase Server와도 통합해서 Client와 공유할 수 있음)
 - 응용 서비스 (FTP,Web,DNS,PRoxy 등 응용 서비스들을 Client와 공유 할 수 있음) 
-- Cluster 서비스 (Samba를 사용하여 Cluster 서비스와 통합하여 작업을 분산하고 Client와 공유할 수 있)
+- Cluster 서비스 (Samba를 사용하여 Cluster 서비스와 통합하여 작업을 분산하고 Client와 공유할 수 있음)
 ```
 
 - 즉, Samba는 일종의 `공유 폴더`이다.
