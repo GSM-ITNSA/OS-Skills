@@ -46,3 +46,57 @@
 - 그럼 SSH Server는 Client의 Public Key로 암호화를 하게 되고, 이걸 복호화를 할 수 있는 대상을 동일한 키 쌍을 가지고 있는 SSH Client 뿐인것이다.
 
 ---
+
+## SSH Option
+
+- SSH의 주요 옵션들이다. 더 자세한 옵션을 알고싶으면 `man ssh`로 찾아보는것을 추천한다.
+
+```markdown
+SSH [option]
+
+-1 : SSH version 1을 사용한다.
+-2 : SSH version 2를 사용한다.
+-4 : IPv4를 사용한다.
+-6 : IPv6를 사용한다.
+-i : 공개키 인증시 사용되며, 사용할 개인키 파일을 지정할 수 있다.
+-p : 원격 호스트에 연결할 포트를 지정한다.
+-x : x11 연결을 불가능하게 한다.
+-l : 원격 접속할 계정을 설정한다.
+-v : Debugging Mode를 활성화 한다.
+-g,-G : 장비 관련 옵션.
+-L : 원격 호스트와 포트에 전송할 로컬 포트를 설정한다.
+-R : 로컬 호스트와 지정된 포트로 전송될 원격 포트를 설정한다.
+-e : 세션에 대한 이스케이프 문자를 설정한다.
+-C : 모든 데이터에 대한 압축을 요청한다.
+
+명령어 사용 예시 ..
+다른 명령어 사용 예시는 실습문서에서 더 자세히 설명할 것이다.
+
+// 기본 포트로 접속하기 (22 포트)
+# ssh root@1.1.1.1 
+# ssh root@HostAddress
+
+// -l 옵션 이용해서 접속하기
+# ssh HostAddress -l root
+
+// 다른 포트로 접속하기 (22022 포트)
+# ssh root@1.1.1.1 -p 22022
+
+// 원격 접속 후 명령문 실행
+# ssh root@1.1.1.1 netstat -ntap
+
+// 공개키 인증을 통해 원격 접속하기(개인키 지정)
+# ssh -i ssh_key root@1.1.1.1
+```
+
+## SSH Agent
+
+- 쉽게 말해 Private Key를 Memory에 저장하는 프로그램이다.
+- Memory의 저장된 Key들은 Client 들이 사용할 수 있다.
+- SSH Agent는 SSH Client에게 직접 Private Key를 노출시키지 않는다.
+- SSH Agent를 사용하면 SSH를 생성해도 Password를 자꾸 요구하는 상황을 막을 수 있기도 하다.
+
+### SSH Agent Forwarding
+
+- SSH Agent Forwarding은 Client가 원격 Server에 접속 한 후 해당 원격 서버를 통해 다른 서버에 접속할 때 SSH Agent를 사용할 수 있게 해주는 것이다.
+- 자세한 내용과 구현은 실습을 하면서 설명할 예정이다.
