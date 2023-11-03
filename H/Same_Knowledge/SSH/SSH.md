@@ -94,7 +94,16 @@ SSH [option]
 - 쉽게 말해 Private Key를 Memory에 저장하는 프로그램이다.
 - Memory의 저장된 Key들은 Client 들이 사용할 수 있다.
 - SSH Agent는 SSH Client에게 직접 Private Key를 노출시키지 않는다.
-- SSH Agent를 사용하면 SSH를 생성해도 Password를 자꾸 요구하는 상황을 막을 수 있기도 하다.
+- 또한 SSH Agent를 사용하면 SSH Key를 사용하여 원격 서버에 접속할 때 비밀번호를 자꾸 물어보지 않게 할 수 있다.
+
+```markdown
+이게 무슨 말인가요 ??
+
+* SSH Key 생성시 비밀번호를 입력하면 Key를 이용해 원격 서버에 접속할 때 비밀번호를 물어보는데, 이게 너무 귀찮다.
+* ID, PW 넣는게 싫어서 SSH Key를 만들었더니 Key를 만들었더니 또 PW를 요구하는 것이다 ;;
+* 이 때, SSH-Agent는 Private Key의 PW를 암호화해 기억해두고 처음 한 번만 Private Key를 입력하면 다음부터는 기억해놓은 PW를 사용한다.
+* 그러므로 사용자는 또 PW를 입력하지 않아도 된다.
+```
 
 ### SSH Agent Forwarding
 
