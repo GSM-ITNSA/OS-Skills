@@ -145,15 +145,3 @@ MAC에서 add
 ### 단점
 
 - Hypervisor에게 Hyper-Call 요청을 할 수 있도록 각 OS의 Kernel을 수정해야 하며 오픈소스 OS가 아니면 반 가상화를 이용하기가 쉽지가 않다.
-
-## 3. Container 가상화
-
-<img src="./Image/Hyper11.png" alt="Alt123" width="600">
-
-
-- HOST OS위에 Container 관리 SW를 설치하여, 논리적으로 Container를 나누어 사용한다.
-- Container는 Application 동작을 위한 라이브러리와 Application으로 구성되기 때문에 `Container를 각각의 개별 서버처럼 사용 가능`하다.
-
-### 장점
-
-- Container 가상화는 OverHead가 적에 가볍고 빠른 장점이 있다.
