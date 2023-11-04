@@ -21,6 +21,12 @@ VM은 물리적 머신과 같은 동작을 수행하지만 CPU,Memory 같은 VM 
 
 ---
 
+### Hypervisor란 ?
+
+- Hypervisor는 VM을 생성하고 구동하는 SW이다.
+- Hypervisor는 Hypervisor OS와 VM의 Resource를 분리하여 VM의 생성과 관리를 지원한다.
+- Hypervisor는 할당되었던 물리 Resource를 각 VM에 제공하고, 물리 Resource에 대해 VM Resource에 얼마나 할당할지를  결정하기도 한다.
+
 ## Virtualization 예시
 
 - 가상화를 이용하면 서버를 통합하고 서버의 자원을 최대한으로 사용할 수 있다. 그러므로 서버 급증 문제를 해결 할 수 있다.
