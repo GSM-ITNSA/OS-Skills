@@ -105,3 +105,19 @@ Provisioning : 컴퓨팅 리소스를 할당하고 준비하는 과정
 ```markdown
 Migration : 한 시스템 -> 한 시스템으로 데이터,소프트웨어,Application 또는 가상머신을 이동시키는 과정이다.
 ```
+
+## Hypervisor Type
+
+<img src="./Image/Hyper14.png" alt="Alt123" width="600">
+
+
+### Type 1 (Bare Metal)
+
+- Hypervisor가 해당 HW에서 직접 실행되며 Guest 운영 체제는 HW 위에서 2번째 수준으로 실행된다.
+- KVM,Hyper-v,Xen …
+
+### Type 2
+
+- 일반 프로그램과 같이 Host 운영 체제에서 실행된다.
+- VM 내부에서 동작되는 Guest OS는 HW에서 3번째 수준으로 실행된다.
+- Virtual Box, Virtual Server, QEMU  ….
