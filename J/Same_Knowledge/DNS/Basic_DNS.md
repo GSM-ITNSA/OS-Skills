@@ -78,7 +78,7 @@ DNS 는 사용자가 이해하기 쉬운 도메인 이름을 컴퓨터가 이해
     - `Root DNS Server` 로부터 받은 정보로 해당 도메인의 `TLD DNS Server`에 질의를 보낸다
 7. `TLD DNS Server` 응답
     - 요청받은 도메인의 `Authoritative DNS Server` 에 대한 정보를 `Local DNS Server` 로 반환
-8. `Authoritative DNS Servver` 응답
+8. `Authoritative DNS Server` 응답
     - 요청받은 도메인에 대한 데이터를 `Local DNS Server`로 반환 한다
 9. `Local DNS Server`의 응답
     - Local DNS 리졸버는 도메인 이름에 대한 IP 주소 정보를 받는다.
@@ -118,7 +118,7 @@ DNS 는 사용자가 이해하기 쉬운 도메인 이름을 컴퓨터가 이해
 #### 단점
 ```
 복잡성
-    Host는 여러 단계의 질의를 수행해야 하므로 복잡성이 증가할 수 있다
+    Local DNS Server는 여러 단계의 질의를 수행해야 하므로 복잡성이 증가할 수 있다
 ```
 
 ### Recursive
