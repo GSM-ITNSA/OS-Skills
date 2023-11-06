@@ -116,3 +116,129 @@ Resource Pool로 만들어 마치 하나의 Computer 처럼 보이게 하겠다�
 - Kubernetes는 Container화된 Application의 배포, 확장 및 관리를 자동화하는 오픈소스 시스템이다.
 - Kubernetes는 단순한 Container 플랫폼이 아닌, 마이크로 서비스, 클라우드 플랫폼을 지향하며, Container로 이루어진 것들을 손쉽게 담고 관리할 수 있는 그릇 역할을 한다.
 - Serverless, CI/CD, 머신러닝 등 다양한 기능이 Kubernetes위에서 동작한다.
+
+## Container의 역사 - CHROOT부터 KUBERNETES 까지
+
+- Container 기술의 시작과 현재까지 발전해온 역사를 살펴보자.
+
+<img src="./Image/C5.png" alt="Alt123" width="600">
+
+
+## 2000년 이전
+
+### 1. chroot
+
+```markdown
+- Container의 역사는 1979년에 chroot를 발표한 것으로부터 사직한다.
+- chroot는 이름 그대로 "root(/)디렉토리(기준이 되는 디렉터리) 변경" 하는 것 이다.
+- chroot는 process의 Root Directory를 변경하는 것으로, 이를 통해 Process가 Access할 수 있는
+  디렉터리를 제한하거나 시스템 라이브러리를 로드할 수 있다.
+```
+
+### 2. Virtuozzo
+
+```markdown
+- Virtuozzo는 1999년에 개발되었다.
+- Container 가상화의 새로운 방향을 제시하였다.
+- Virtuozzosms Linux Container 기술을 사용하여 가상화를 구현하는 기술이다.
+```
+
+### 3. FreeBSD Jail
+
+```markdown
+- 2000년 Unix OS인 FreeBSD에서 OS 가상화 기능인 FreeBSD Jail을 발표했다.
+- FreeBSD Jail은 chroot처럼 파일 Access를 제어하는 것이 아닌 Host OS 가상화 환경에서 
+  파일 System, Process, Network을 분리 할 수 있는 획기적인 기술을 제공하였다.
+```
+
+## 2000 ~ 2010
+
+### 4. Linux VServer
+
+```markdown
+- 2001년에 개발되었다.
+- FreeBSD Jail과 마찬가지로 Linux VServer는 System Resource (File System, Network
+  주소 메모리)를 나눌 수 있는 Jail 메커니즘을 제공한다.
+```
+
+### 5. The Borg System By Google
+
+```markdown
+- 2003년에 개발되었다.
+- 구글이 제공하는 서비스를 위한 Container Ochestration System이다.
+- Kubernetes는 Borg를 바탕으로 Google에서 Open Source화 한 Container Ochestration SW이다.
+```
+
+### 6. Solaris Containers (Zone) 출시
+
+```markdown
+- 2004년에 개발되었다.
+- Solaris Containers는 Solaris의 Container 기술이다.
+- Solaris Containers는 Snapshot을 생성하여 특정 시점의 상태를 저장하고, 나중에 이 Snapshot
+  을 사용하여 Container를 이전 상태로 복원할 수 있다.
+- 또한 Zones라고도 불리는 가상 환경을 생성한다. 이 Zones는 Solaris OS의 일부이며, 격리된
+  환경을 제공하면서도 Host System과 Resource들을 효율적으로 공유할 수 있다.
+```
+
+### 7. Open VZ (Open Virtuzzo)
+
+```markdown
+- 2005년에 개발되었다.
+- 상용 Container인 Virtuzzo의 Open Source SW버전이다.
+- Kernel을 공유하면서 분리된 공간을 제공한다. 현재의 Container 개념과 동일하다.
+```
+
+### 8. LXC (Linux Containers)
+
+```markdown
+- 2008년에 개발되었다.
+- 2008년, Cgroup 및 Linux Namespace를 사용해 구현하여 단일 Linux 커널에서 동작한다.
+- 처음으로 Linux 상에서 Container 개념을 가장 완벽하게 구현하였다. 
+```
+
+## 2010년 이후
+
+### 9. Docker
+
+```markdown
+- 2013년에 개발되었다.
+- 2013년 3월 26일에 Docker Open Source SW로 공개되었다.
+- RHEL,SUSE,Debian 등 모든 Linux 배포판을 지원한다.
+- Docker는 Container 기술 확산에 기폭제 역할을 하였다.
+```
+
+### 10. Kubernetes
+
+```markdown
+- 2015년에 개발되었다.
+- 2015년 7월 21일 Kubernetes v1.0이 출시되었다.
+- 구글에서 Open Source로 기증한 Container Ochestration 도구이다.
+```
+
+### 11. CNCF (Cloud Native Computing Foundation)
+
+```markdown
+- 2016년에 개발되었다.
+- 2016년 1월에 정식 출범한 CNCF는 혼돈스러운 Container와 관련된 다양한 기술적인 문제들을
+  Open Source로 해결하는 것을 목표로 하였다.
+```
+
+### 12. Containerd
+
+```markdown
+- 2016년에 개발되었다.
+- 2016년 12월 Docker에서 Containerd가 분리되었다.
+```
+
+### 13. OCI (Open Container Initiative)
+
+```markdown
+- 2017년 7월 Open Container Initiative Container 관련 표준 v1.0을 발표하였다.
+```
+
+### 14. CRI-O
+
+```markdown
+- 2017년에 개발되었다.
+- 2017년 7월 Kubernetes 표준인 CRI와 OCI에 최적화된 표준 Container Runtime을 발표하였.
+```
