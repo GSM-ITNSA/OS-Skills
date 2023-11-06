@@ -62,9 +62,9 @@ DNS 는 사용자가 이해하기 쉬운 도메인 이름을 컴퓨터가 이해
 1. Host 의 hosts 파일 확인
     - hosts의 파일에서 보낼 쿼리에 대한 데이터가 구성 되어있을 수 있기 때문에 확인한다
     - Linux는 /etc/hosts 파일에 구성 되어있다
+    - Windows는 C:\windows\system32\drivers\etc\hosts 파일에 구성 되어있다
 2. Local Host 의 Cache 확인
     - 한번 쿼리를 한 내용이면 Cache에 저장되기 때문에 확인을 한다
-    - Windows 는 C:\windows\system32\drivers\etc\hosts 파일에 구성 되어있다
 3. Host 요청
     - 사용자가 웹 브라우저에서 도메인 이름을 입력하면, Host 의 DNS 리졸버가 해당 도메인에 대한 IP 주소 정보를 요청 한다
 4. `Local DNS Server` 에서 `Root DNS Server` 로 요청
@@ -74,10 +74,12 @@ DNS 는 사용자가 이해하기 쉬운 도메인 이름을 컴퓨터가 이해
 5. `Root DNS Server` 응답
     - `Root DNS Server`는 도메인 이름의 최상위 도메인에 대한 정보를 반환한다
     - 이 정보는 TLD DNS 서버의 주소이다
-7. `Local DNS Server` 에서 `TLD DNS Server` 로 요청
+6. `Local DNS Server` 에서 `TLD DNS Server` 로 요청
     - `Root DNS Server` 로부터 받은 정보로 해당 도메인의 `TLD DNS Server`에 질의를 보낸다
-8. `TLD DNS Server` 응답
+7. `TLD DNS Server` 응답
     - 요청받은 도메인의 `Authoritative DNS Server` 에 대한 정보를 `Local DNS Server` 로 반환
+8. `Authoritative DNS Servver` 응답
+    - 요청받은 도메인에 대한 데이터를 `Local DNS Server`로 반환 한다
 9. `Local DNS Server`의 응답
     - Local DNS 리졸버는 도메인 이름에 대한 IP 주소 정보를 받는다.
     - HOST의 로컬 캐시에 이 정보를 저장
@@ -106,7 +108,7 @@ DNS 는 사용자가 이해하기 쉬운 도메인 이름을 컴퓨터가 이해
 #### 장점
 ```
 빠른 응답
-    Host가 질의를 여러 단계로 나누어 진행하기 때문에 중간 단계의 DNS 서버에서 즉각적인 응답을 얻을 수 있다
+    Local DNS Server가 질의를 여러 단계로 나누어 진행하기 때문에 중간 단계의 DNS 서버에서 즉각적인 응답을 얻을 수 있다
     이로 인해 전체 질의가 빠르게 처리될 수 있다
 
 네트워크 부하 감소
