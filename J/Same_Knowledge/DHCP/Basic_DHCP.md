@@ -55,3 +55,54 @@ IP 체계의 유연성
     - 승인받지 않은 클라이언트가 DHCP 서버를 가로채 리소스에 대한 접근 권한을 탈취 가능
     - 악성 클라이언트가 DHCP 리소스를 소모시킬 수 있음
 ```
+
+## DHCP 프로토콜 원리
+```
+DHCP 서버가 IP 주소를 영구적으로 클라이언트에 할당하는 것이 아닌 임대기간(IP Lease Time)을 명시하여 해당 기간 동안만 클라이언트가 IP 주소를 사용하도록 임대해주는 것
+( 임대기간은 설정에 따라 다르지만 24시간을 기본 임대기간으로 설정하는 경향이 있다 )
+
+클라이언트가 임대기간 이후에도 해당 IP 주소 사용을 원한다면 IP 주소 임대기간 연장(IP Address Renewal)을 DHCP 서버에 요청해야 함
+
+임대 받은 IP 주소가 더 이상 필요하지 않으면 IP 주소 반남 절차(IP Address Release) 수행
+```
+
+## DHCP 주소 할당 절차
+<img src="./Images/DHCP_IP_Assignment.png" width="400">
+
+### DHCP Discover
+- 클라이언트가 DHCP 서버를 찾는 단계
+- 이더넷에 DHCP 서버를 찾기 위한 Discover 메시지를 브로드캐스팅한다.
+- 동일 서브넷 안의 모든 클라이언트들이 이 메시지를 수신하게 된다.
+
+### DHCP Offer
+- Discover 메시지를 수신하고 패킷을 확인한 후 Broadcast flag 를 확인하여 Offer(제안)을 broadcast로 보낼지 unicast로 보낼지 정한다. (위 사진은 broadcast로 보냄)
+- 마찬가지로 동일 서브넷 안의 모든 단말들이 이 메시지를 수신한다.
+- DHCP 서버의 존재와 클라이언트에 할당할 IP 주소 등 다양한 네트워크 정보를 전달
+- `주요 파라미터` (일반적인 파라미터로 따로 설정하거나 바꿀 수 있음)
+    ```
+    1. Client MAC: 클라이언트의 MAC 주소
+    2. Your IP: 클라이언트에 할당(임대)할 IP 주소
+    3. Subnet MasK (Option 1): 클라이어트의 subnet mask 주소
+    4. Router (Option 3): 클라이언트의 Default Gateway IP 주소
+    5. DNS (Option 6): DNS 서버 IP 주소
+    6. IP Lease Time(Option 51): 클라이언트가 IP 주소를 사용(임대)할 수 있는 시간(기간)
+    7. DHCP Server Identifier(Option 54): DHCP Offer를 보낸 DHCP 서버의 주소
+    (2개 이상의 DHCP 서버가 DHCP Offer를 보낼 수 있으므로 각 DHCP 서버는 자신의 IP 주소를 메세지에 포함)
+    ```
+### DHCP Request
+- 클라이언트는 DHCP 서버의 존재를 알았고, DHCP 서버가 클라이언트에 제공할 네트워크 정보를 알게 됨
+- 이제 클라이언트는 DHCP Request 메시지를 통해 하나의 DHCP 서버를 선택하고 해당 서버에게 클라이언트가 사용할 네트워크 정보를 요청한다
+- `주요 파라미터`
+    ```
+    1. Client MA: 단말의 MAC 주소
+    2. Requrested IP Address(Option 50): 난 이 IP 주소를 사용하겠다. 
+        (DHCP Offer의 Your IP 주소가 여기 들어감)
+    3. DHCP Server Identifier(Option 54): 2대 이상의 DHCP서버가 DHCP Offer를 보낸경우,
+    클라이언트는 이 중에 마음에 드는 DHCP 하나를 고르게 되고, 
+    그 서버의 IP 주소가 여기에 들어감
+    ```
+
+### DHCP Ack
+- DHCP Offer과 마찬가지고 DHCP Request 의 Broadcast Flag 를 확인하여 응답방식을 정한다
+- DHCP 절차의 마지막 메시지로, DHCP 서버가 클라이언트에게 "네트워크 정보" 를 전달해주는 메시지
+- DHCP Offer의 "네트워크 정보"와 동일한 파라미터가 포함됨
