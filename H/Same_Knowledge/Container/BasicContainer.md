@@ -240,5 +240,5 @@ Resource Pool로 만들어 마치 하나의 Computer 처럼 보이게 하겠다�
 
 ```markdown
 - 2017년에 개발되었다.
-- 2017년 7월 Kubernetes 표준인 CRI와 OCI에 최적화된 표준 Container Runtime을 발표하였.
+- 2017년 7월 Kubernetes 표준인 CRI와 OCI에 최적화된 표준 Container Runtime을 발표하였다.
 ```
