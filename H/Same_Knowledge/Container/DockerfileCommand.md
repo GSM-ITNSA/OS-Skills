@@ -275,7 +275,7 @@ HEALTHCHECK --interval=1m --timeout=3s --retries=3 CMD curl -f http:localhost ||
 
 - healthy 상태 확인하는 예시
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/d236a6d1-1cb1-4873-824f-cd03053f6832/767448d1-1098-4e15-8001-c4b97dc7b52f/Untitled.png)
+!<img src="./Image/Docker7.png" alt="Alt123" width="600">
 
 ### Shell
 
