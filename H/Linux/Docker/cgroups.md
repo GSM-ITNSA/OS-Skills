@@ -27,12 +27,11 @@ ex) 각 그룹에 네트워크 우선순위를 어떻게 줄 것인가?
 
 ## Cgroups의 특징
 
-- cgroup은 File System이며 Mount하여 사용한다.
+- cgroup은 Mount하여 사용 할 수 있다..
 
 ```docker
 이후에 설명하겠지만 cgroup은 디렉터리 구조로 나타난다.
-이것은 File System의 형태를 따르며, 사용자 및 Process에 대한 제한 및 관리를 허용한다.
-/sys/fs/cgroup/  이 경로 아래에 여러 Sub Directory들이 생성된다. 
+/sys/fs/cgroup/ 경로 아래에 여러 Sub Directory들이 생성된다. 
 cgroup을 사용할 때, /sys/fs/cgroup을 특정 Directory에 mount하여 cgroup sub system을 사용할 수 있다.
 ```
 
