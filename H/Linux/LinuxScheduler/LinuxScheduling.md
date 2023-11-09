@@ -63,7 +63,9 @@ Process가 CPU를 기다리는데 소요한 시간을 계산하여 우선순위�
 - 이를 통해 CPU는 매우 짧은 시간 동안 여러 Process들을 공정하게 분배하여 실행할 수 있다.
 - Scheduler는 각 Process에게 Time Slot을 할당하고 해당 시간동안 Process가 실행된다.
 - Time Slot이 끝나게 되면 Scheduler는 다음 Process에게 Time Slot을 할당한다. `이를 반복하여 모든 Process가 실행될 수 있도록 하는것이다.`
-- Time Slot에 크기는 Scheduler의 설정에 따라 다를 수 있지만 작을 수록 더 공정하게 실행될 수 있다.
+- Time Slot의 크기는 Scheduler의 설정에 따라 다를 수 있지만 작을 수록 더 공정하게 실행될 수 있다.
+- Process는 주어진 Time Slot을 소진하게 되면 컨텍스트 스위칭 된다. 
+    - 컨텍스트 스위칭이란, CPU 위에서 동작하는 Process가 변경되는 것을 뜻한다.
 
 ```docker
 하지만 너무 작은 시간단위로 Time Slot을 설정해버리면 OverHead가 발생할 수 있으므로 
