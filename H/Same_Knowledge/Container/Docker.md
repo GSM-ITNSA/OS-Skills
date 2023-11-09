@@ -89,26 +89,276 @@ CMD ["/app/run.sh"]
 !<img src="./Image/Docker5.png" alt="Alt123" width="600">
 
 
+## Docker CLI Command
+
+- Docker Docs를 참고하여 설명하겠다.
+- docker cli 명령어로 실행 시킬 수 있는 명령어와 옵션을 담았다.
+
+### docker attach
+
+```docker
+docker attach [options] CONTAINER
+```
+
+- `docker attach` 명령어는 Process의 출력을 나타낸다.
+- 진행 중인 상황을 Terminal에서 보는 것처럼 직접 보거나 대화식으로 제어할 수 있다.
+
+```docker
+Option
+
+--detach-keys : Container 분리를 위한 Key Sequence 재 정의
+--no-stdin : stdin을 첨부하지 않는다. 
+--sig-proxy(기본값 True) : 수신된 모든 신호를 Process로 보낸다. 
+```
+
 ### docker run
 
 ```markdown
-이 명령어는 Image를 기반으로 새로운 Container를 생성하고 실행한다.
+docker run [options] IMAGE 
+```
 
-* 위의 사진처럼 docker run을 입력하면 docker daemon에서 image를 가지고 container를 생성 후 실행한다.
+- `docker run` 명령어는 docker image로 부터 만든 새로운 Container에서 명령어를 실행 시키는 명령어이다.
+
+```docker
+Options 
+
+-t : TTY 모드를 사용하는 것으로 쉘에 명령어를 작성할 수 있다. 
+-d : Container를 Background에서 실행하도록 하는 Option이다. 
+-e : 환경 변수를 추가하는 옵션이다. 여러 환경변수를 사용하고 싶으면 -e를 계속 사용해야한다.
+-p : Host에 연결된 Container의 특정 포트를 외부와 통신하기 위해 노출할 때 사용된다. 
+--rm : 명령어 수행 후 container가 삭제 되도록 하는 Option이다. Container를 일회성으로 사용할 때 주로 쓰인다.
+--name : Container의 이름을 설정할 때 사용된다. 
 ```
 
 ### docker build
 
 ```markdown
-이 명령어는 Dockerfile을 기반으로 Docker Iamge를 빌드한다. 
+docker build [options] PATH | URL 
+```
 
-* 위의 사진처럼 docker build를 입력하면 Dockerfile을 참조하여 이미지를 빌드(생)한다. 
+- `docker build` 명령어는 Dockerfile에서 Docker Image를 Build 한다.
+- docker build는 Path와 URL로 Build 할 수 있다.
+
+```docker
+Option 
+
+--build-arg : Build 시간 변수를 설정한다. 
+--cache-from : Cache 소스로 사용할 이미지를 지정한다. 
+--cpu-period : CPU CFS 기간을 제한한다. 
+--cpu-quota : CPU CFS 할당량을 제한한다. 
+--file : Dockerfile의 이름을 지정한다.(기본값 PATH/Dockerfile)
+--label : Image를 보충 설명하는 Metadata 설정 
+--memory : Memory 한도 
+--no-cache : Image를 Build 할 때 Cache를 사용하지 않는다.
+--pull : 항상 최신 상태의 Image를 가져오도록 설정한다. 
 ```
 
 ### docker pull
 
 ```markdown
-이 명령어는 Docker Hub 또는 Docker Repository에서 local System으로 가져온다.
-
-* 위의 사진처럼 Registry에서 Image를 가져와 Container에 쉽게 적용할 수 있다.
+docker pull [options] NAME:TAG
 ```
+
+- 이 명령어는 Docker Hub 또는 Docker Registry에서 local System으로 가져온다.
+- 번외로 docker image에서 latest Tag는 Tag 값이 명시적으로 설정되지 않은 상태를 뜻한다.
+
+```docker
+Option 
+
+-a : Repository의 Tag가 지정된 모든 이미지 다운로드
+-q : 자세한 출력을 하지 않음 
+```
+
+### docker create
+
+```docker
+docker create [options] IMAGE
+```
+
+- 이 명령어는 docker container를 생성한다.
+- 지정된 Image를 가지고 새 Container를 생성하는 것이다.
+
+```docker
+Options 
+
+--cgroupns : 사용한 cgroup namesace에서 container를 실행한다. 
+--cpus : cpu 수를 지정한다. 
+--device : container에 host 장치를 추가할 수 있다. 
+--dns : 사용자 정의 DNS 서버 설정 
+--ip : ipv4 주소 
+-v : Volume Bind Mount 
+```
+
+### docker start
+
+```docker
+docker start [option] CONTAINER
+```
+
+- 이 명령어는 docker container를 실행한다.
+- 하나 이상의 중지된 Container를 시작하는 것이다.
+
+```docker
+Option 
+
+--checkpoint : Checkpoint 설정
+--i : Container의 STDIN 연결 
+```
+
+### docker commit
+
+```docker
+docker commit [OPTIONS] CONTAINER [REPOSITORY[:TAG]]
+```
+
+- commit을 한 상태 그대로 새로운 image를 생성한다.
+
+```docker
+Option 
+
+-a : 작성자를 설명할 수 있다. (ex : Lee Hyeon Jun)
+-c : 생성된 Image에 Dockerfile 명령을 적용한다. 
+-m : commit Message
+-p : commit을 하는동안 Container Pause 시키기
+```
+
+### docker ps
+
+```docker
+docker ps [options]
+```
+
+- Docker의 list들을 나타낸다.
+
+```docker
+Option 
+
+-a : 모든 Container를 전부 보여준다. 
+-f : 조건에 따라 필터링을 한다. 
+-n : 마지막으로 생성된 n개의 Container를 표시한다. 
+-l : 최근 생성된 Container를 표시한다. 
+-q : Container ID만 표시한다. 
+-s : 총 파일 크기를 표시한다. 
+```
+
+### docker rename
+
+```docker
+docker rename CONTAINER [NEW_NAME]
+```
+
+- 말 그대로 새로 이름을 정하는 것이다.
+
+### docker rm
+
+```docker
+docker rm [optoins] CONTAINER
+```
+
+- 하나 또는 하나 이상의 Container를 삭제한다.
+
+```docker
+Option 
+
+-f : 실행 중인 Container를 강제로 제거한다. (SIGKILL15 사용)
+-l : 지정된 링크를 제거한다. 
+-v : Container와 연결된 볼륨을 제거한다. 
+```
+
+### docker exec
+
+```docker
+docker exec [options] CONTAINER COMMAND
+```
+
+- 실행 중인 Container에서 명령을 실행한다.
+
+```docker
+Option
+
+-d : Background에서 명령을 실행한다. 
+-i : 연결되지 않은 경우에도 STDIN을 열어둔다. 
+-t : TTY 모드를 사용하여 쉘에서 명령어를 입력할 수 있다.
+```
+
+### docker kill
+
+```docker
+docker kill [options] CONTAINER
+```
+
+- 하나 또는 하나 이상의 실행 중인 컨테이너를 종료한다.
+
+```docker
+Option 
+
+-s : Container에 보내는 신호 
+```
+
+### docker tag
+
+```docker
+docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]
+```
+
+- SOURCE_IMAGE를 참조하는 TARGET_IMAGE TAG를 생성한다.
+- latest는 아무 Tag도 붙여져 있지 않는 상태를 말한다.
+
+```docker
+예시 
+
+docker tag 0e5574283393 fedora/httpd:version1.0
+```
+
+### Docker rmi
+
+```docker
+docker rmi [options]
+```
+
+- 하나 또는 하나 이상의 Docker image 파일을 삭제한다.
+
+```docker
+Option
+
+-f : 강제적으로 삭제한다.
+```
+
+## Volume Mount & Bind Mount
+
+<img src="./Image/Docker8.png" alt="Alt123" width="600">
+
+
+- Docker Container에 사용된 File들은 Container가 삭제될 때 함께 삭제된다.
+- Docker에서 많은 Application을 저장해서 계속적으로 사용할 수 있도록 해주는 option이 바로         `Volume과 Bind Mount`이다.
+- 즉, Container가 host System에 파일을 저장할 수 있는 방법이다. 이 Option들은 Container가 중지가 되더라도 파일이 유지된다.
+
+## Bind Mount
+
+- Bind Mount는 Host System에 어느 곳에나 저장을 할 수 있고, Docker Container 내에서 언제든지 수정이 가능하다.
+- 또한, Bind Mount를 사용하면 Host-System의 File 또는 Directory가 Container에 mount되며, Mount된 File 또는 Directory는 host의 전체 경로로 나타난다.
+- Bind mount의 성능은 매우 우수하지만 Host File System에 의존하기 때문에 Volume에 비해 상대적으로 기능이 제한적이다. (왜 제한적인지는 아래에서 소개하겠다.)
+
+```docker
+만약 Mount 하고자 하는 Container Directory에 파일 내용이 들어있다면 Mount를 한 순간 기존에 존재한 내용은 전부 가려지게 된다.
+```
+
+## Volume
+
+- 위에서 Volume보다 Bind Mount는 기능적인 부분에서 제한적이라고 언급하였다.
+- 그럼 `Volume`이란 무엇일까 ?
+
+## Volume(2)
+
+- VOlume은 여러 Container에 동시에 탑재할 수 있고, 실행 중인  Container가 Volume을 사용하지 않더라도 Volume은 게속 Docker에서 사용할 수 있다.
+- 만약 Volume을 생성하게 되면 `/var/lib/docker/volume/~` 에 볼륨이 생성된 것을 확인할 수 있을 것이다.
+- 그리고 사진처럼 해당 Directory는 Host File System 중 Docker에서 관리하는 영역(Docker Area)에 저장되는 것이다.
+
+---
+
+## Volume이 더 좋은 이유
+
+- Volume은 Bind Mount보다 Backup 또는 이동(Migration)이 더 쉽다.
+- Docker CLI 명령 또는 Docker API를 사용하여 볼륨을 관리할 수 있다.
+- Volume은 Linux  및 Windows Container 모두에서 동작한다.
+- Volume Driver를 사용하면 볼륨의 내용을 암호화하는 등 다른 기능들을 추가 할 수 있다.
