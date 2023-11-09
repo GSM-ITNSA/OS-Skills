@@ -53,3 +53,19 @@ Process가 CPU를 기다리는데 소요한 시간을 계산하여 우선순위�
 
 물론 우선순위는 단순히 기다린 시간에 비례하지는 않고 다양한 조건들을 고려해서 매기는 것이다..
 ```
+
+### Time slot
+
+- `Time Slot` 은 Linux Scheduler에서 사용되는 개념이다.
+- CPU를 Process들 사이에서 공정하게 분배하기 위해 사용되는 시간 단위이다.
+- Scheduler는 CPU를 여러 Process들 사이에서 공유하므로 각 Process는 CPU를 사용할 수 있는 시간을 할당 받아 실행된다.
+- 또한, Time Slot은 매우 작은 시간 단위이다.
+- 이를 통해 CPU는 매우 짧은 시간 동안 여러 Process들을 공정하게 분배하여 실행할 수 있다.
+- Scheduler는 각 Process에게 Time Slot을 할당하고 해당 시간동안 Process가 실행된다.
+- Time Slot이 끝나게 되면 Scheduler는 다음 Process에게 Time Slot을 할당한다. `이를 반복하여 모든 Process가 실행될 수 있도록 하는것이다.`
+- Time Slot에 크기는 Scheduler의 설정에 따라 다를 수 있지만 작을 수록 더 공정하게 실행될 수 있다.
+
+```docker
+하지만 너무 작은 시간단위로 Time Slot을 설정해버리면 OverHead가 발생할 수 있으므로 
+적절한 크기를 선택하는것이 중요하다. 
+```
