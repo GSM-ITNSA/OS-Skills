@@ -30,19 +30,22 @@ DHCP Agent 를 통해 클라이언트의 요구사항을 외부 네트워크에 
 ## DHCP Relay Agent가 있는 환경에서 메시지 흐름 요약
 ### 자세한 내용은 Basic_DHCP 의 DHCP 서버의 IP 할당 순서를 확인하세요
 ```
-DHCP Discover [클라이언트 -> DHCP 서버]
-    클라이언트가 브로드캐스트 시지를 보내면 이를 DHCP Relay Agent가 수신하여 유니캐스트로 변환 
-    (SIP=DHCP Relay Agent, DIP=DHCP Server)하여 DHCP 서버로 전달
+DHCP Discover [클라이언트 -> Agent -> DHCP 서버]
+    클라이언트가 브로드캐스트 시지를 보내면 이를 DHCP Relay Agent가 
+    수신하여 유니캐스트로 변환 (SIP=DHCP Relay Agent, DIP=DHCP Server)하여 
+    DHCP 서버로 전달
 
-DHCP Offer [DHCP 서버 -> 클라이언트]
-    DHCP 서버가 DHCP Relay Agent로 유니캐스트(SIP=DHCP 서버, DIP=DHCP Relay Agent)로 보내면 
+DHCP Offer [DHCP 서버 -> Agent -> 클라이언트]
+    DHCP 서버가 DHCP Relay Agent로 유니캐스트
+    (SIP=DHCP 서버, DIP=DHCP Relay Agent)로 보내면 
     이를 수신한 DHCP Relay Agent는 단말로 브로드캐스트로 변환하여 전송
 
-DHCP Request [클라이언트 -> DHCP 서버]
-    클라이언트가 브로드캐스트 메시지를 보내면 이를 DHCP Relay Agent가 수신하여 유니캐스트로 변환
-    (SIP=DHCP Relay Agent, DIP=DHCP Server)하여 DHCP 서버로 전달
+DHCP Request [클라이언트 -> Agent -> DHCP 서버]
+    클라이언트가 브로드캐스트 메시지를 보내면 이를 DHCP Relay Agent가 수신하여 유니캐스트로 변환(SIP=DHCP Relay Agent, DIP=DHCP Server)하여 
+    DHCP 서버로 전달
 
-DHCP Ack [DHCP 서버 -> 클라이언트]
-    DHCP 서버가 DHCP Relay Agent로 유니캐스트(SIP=DHCP 서버, DIP=DHCP Relay Agent)로 보내면 
+DHCP Ack [DHCP 서버 -> Agent -> 클라이언트]
+    DHCP 서버가 DHCP Relay Agent로 유니캐스트
+    (SIP=DHCP 서버, DIP=DHCP Relay Agent)로 보내면 
     이를 수신한 DHCP Relay Agent는 단말로 브로드캐스트로 변환하여 전송
 ```
