@@ -29,6 +29,8 @@
 
 ### 1. mnt (File System Mount)
 
+<img src="./Image/namespace2.png" alt="Alt123" width="600">
+
 - Host File System에 구애 받지 않고 독립적으로 File System을 Mount하거나 UnMount를 할 수 있다.
 - 즉, Container에서 mount를 할 때 Host OS에 영향을 미치지 않는다.
 
@@ -51,6 +53,9 @@ Container 내부에서는 /home/user 디렉터리에 다른 파일 시스템을 
 
 ### 3. net (Network)
 
+
+<img src="./Image/namespace3.png" alt="Alt123" width="600">
+
 - Container 안에 여러 Namespace간에 network 충돌을 방지할 수 있다.
 - 각 격리 화 된 Network Interface를 제공하는 기술이다.
 - 중복 Port Binding 등 ..
@@ -66,6 +71,7 @@ Container 내부에서는 /home/user 디렉터리에 다른 파일 시스템을 
 - 이것도 마찬가지로 Namespae가 다르면 다른 실체로 처리된다.
 
 ### 6. ipc (SystemV IPC)
+<img src="./Image/namespace4.png" alt="Alt123" width="600">
 
 - Process간에 독립적인 통신 경로를 제공한다.
 - Container 별로 process가 있을 때 process간에 통신 할 때 사용되는 통신 경로가 독립적인 것이다.
