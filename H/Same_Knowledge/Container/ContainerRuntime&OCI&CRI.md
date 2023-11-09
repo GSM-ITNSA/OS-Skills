@@ -4,6 +4,36 @@
 - 이번에 Container Runtime에 대해 자세히 알아보자 .
 
 ---
+## Container Runtime이란 ?
+
+- Container를 실행하기 위해서는 다음과 같은 세 단계를 거친다.
+
+<img src="./Image/Runtime1.png" alt="Alt123" width="600">
+
+
+- OCI가 만들어질 당시 비 공식적 표준 역할을 하던 Docker는 Container Runtime의 표준화를 위해 필요한 모든 단계가 아닌 마지막 3단계 (Container 실행)만 표준화를 하였다.
+- 이로 인해 단지 Container만 실행하는 `저수준 런타임(OCI Runtime)`과 `고수준 런타임`으로 나뉘게 되었다.
+
+## Low-Level Container Runtime vs High-Level Container Runtime
+
+### Low-Level Container Runtime
+
+<img src="./Image/Runtime2.png" alt="Alt123" width="600">
+
+- Container는 Linux Namespace와 cgroup으로 구현이 된다.
+- Low-Level Container Runtime은 namespace와 cgroup을 구성한 후 그 안에서 명령을 수행한다.
+- Low-Level Container Runtime은 Container를 실제 실행하는 역할을 하지만 Image를 가지고 Container를 생성하고 실행하려면 Image와 관련된 API가 있어야한다.
+- 그러한 기능은 High-Level Container Runtime에서 지원을 한다.
+
+### High-Level Container Runtime
+
+<img src="./Image/Runtime3.png" alt="Alt123" width="600">
+
+
+- High-Level Container Runtime은 Image 관리, 압축 해제, Low level Container Runtime으로 전달 등 조금 더 수준 높은 작업들을 수행한다.
+- 또한 Remote API를 제공하기 때문에 원격으로 Container를 관리하거나 실행 또는 모니터링 할 수 있다.
+- 사진처럼 Container를 실행하기 위해서 Low-Level Runtime위에 배치된다.
+
 
 ## Container Runtime이란 ?
 
