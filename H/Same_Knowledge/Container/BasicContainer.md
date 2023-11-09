@@ -116,6 +116,28 @@ Resource Pool로 만들어 마치 하나의 Computer 처럼 보이게 하겠다�
 - Kubernetes는 Container화된 Application의 배포, 확장 및 관리를 자동화하는 오픈소스 시스템이다.
 - Kubernetes는 단순한 Container 플랫폼이 아닌, 마이크로 서비스, 클라우드 플랫폼을 지향하며, Container로 이루어진 것들을 손쉽게 담고 관리할 수 있는 그릇 역할을 한다.
 - Serverless, CI/CD, 머신러닝 등 다양한 기능이 Kubernetes위에서 동작한다.
+---
+
+## Docker에서 Containerd가 분리되었다고 ?
+
+- 이전에는 Docker 엔진 안에 Containerd가 내장되어있었다.
+- 그러나 Docker는 Container Runtime인 Containerd를 분리하였다. 이유가 뭘까 ?
+
+### 1. 다양한 환경 지원
+
+- 분리된 containerd는 Docker 엔진과는 독립적으로 실행될 수 있다.
+- 이는 Container Runtime을 다른 환경에서 쉽게 통합하고 확장할 수 있다.
+
+### 2. 성능과 안정성
+
+- containerd는 초기에 Container Runtime에 필요한 핵심 기능에 초점을 맞추어 최적화 되었다.
+- 분리된 containerd는 더 나은 성능과 안정성을 제공할 수 있다.
+
+### 3. 모듈화와 분리
+
+- containerd를 Docker 엔진에서 분리함으로써, 각각의 컴포넌트를 독립적으로 개발하고 업데이트 할 수 있다.
+- 이는 개발자들이 더욱 빠르게 기능을 개선하고 버그를 수정할 수 있게 한다.
+
 
 ## Container의 역사 - CHROOT부터 KUBERNETES 까지
 
