@@ -70,7 +70,6 @@ AAA Server : Radius Server
 1. Radius
 2. TACACS+
 3. Diameter 
-4. Kerberos
 ```
 
 ---
