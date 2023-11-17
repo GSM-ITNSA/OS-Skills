@@ -72,7 +72,7 @@ Server는 Session ID가 유효하다면, 동일한 Session ID를 반환한다.
 
 ---
 
-1. **Server는 Client Hello Packet의 응답인 Server Hello Packet을 보낸다.**
+2. **Server는 Client Hello Packet의 응답인 Server Hello Packet을 보낸다.**
 - Server Hello Packet에는 다음과 같은 정보가 들어가 있다.
     - Server의 SSL 인증서
     - 암호화 방식 (Client가 보낸 암호화 방식 중에서 자신이 지원하는 암호화 방식)
@@ -80,14 +80,14 @@ Server는 Session ID가 유효하다면, 동일한 Session ID를 반환한다.
 
 ---
 
-1. **Client는 Server로부터 받은 SSL 인증서가 유효한지 CA를 통해 검사한다.**
+3. **Client는 Server로부터 받은 SSL 인증서가 유효한지 CA를 통해 검사한다.**
     
     `CA : 이건 제가 발급한 SSL 인증서가 맞습니다.` 라고 응답을 하면, SSL 인증서가 유효한것이다.
     
 
 ---
 
-1. 확인이 완료되면, Client는 `The premaster secret` 이라고 불리는 무작위 Byte 문자열을 공개키로 암호화한다. 
+4. 확인이 완료되면, Client는 `The premaster secret` 이라고 불리는 무작위 Byte 문자열을 공개키로 암호화한다. 
     1. 이 때, 공개키는 SSL 인증서 안에 내장되어있는 Server의 공개 키 이다.
     
     ```markdown
@@ -100,21 +100,21 @@ Server는 Session ID가 유효하다면, 동일한 Session ID를 반환한다.
 
 ---
 
-1. Server가 Client 로부터 받은 대칭 키를 자신의 개인 키로 복호화 한다. 
+5. Server가 Client 로부터 받은 대칭 키를 자신의 개인 키로 복호화 한다. 
 
 ---
 
-1. Client는 Client Random Data, Server Random Data, The Premaster Secret을 이용하여 앞으로 통신하는데 사용할 Session Key를 생성한다.
+6. Client는 Client Random Data, Server Random Data, The Premaster Secret을 이용하여 앞으로 통신하는데 사용할 Session Key를 생성한다.
 - 그 후 Finished Packet을 Session Key로 암호화하여 전송한다.
 
 ---
 
-1. Server는 Client로부터 받은 Session Key를 복호화 하고 Client와 똑같은 방식으로 Session Key를 생성한다.
+7. Server는 Client로부터 받은 Session Key를 복호화 하고 Client와 똑같은 방식으로 Session Key를 생성한다.
 - 그 후 똑같이 Finished Pakcet을 Session Key로 암호화하여 전송한다.
 
 ---
 
-1. 이 후 진행되는 모든 데이터 통신은 Session Key를 통해 진행될 것이다.
+8. 이 후 진행되는 모든 데이터 통신은 Session Key를 통해 진행될 것이다.
 
 ## Session Key
 
