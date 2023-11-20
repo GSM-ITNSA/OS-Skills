@@ -30,22 +30,17 @@
 
 ### 동일 출처 예시
 
-| http://example.com:80
-http://example.com | HTTP 기본 Port인 80번이 생략되었으므로 동일 출처이다.  |
+http://example.com <br/> http://example.com:80 | HTTP 기본 Port인 80번이 생략되었으므로 동일 출처이다.  |
 | --- | --- |
-| http://example.com/app1/index.html
-http://example.com/app2/index.html | HOST + Port(생략) + Protocol이 같으며 Path부터 다르므로 동일 출처이다. |
+http://example.com/app2/index.html http://example.com/app1/index.html | HOST + Port(생략) + Protocol이 같으며 Path부터 다르므로 동일 출처이다. |
+
 
 ### 다른 출처 예시
 
-| http://example.com/app1
-https://example.com/app1 | Protocol이 다르므로 다른 출처이다. |
+https://example.com/app1 <br/> http://example.com/app1 | Protocol이 다르므로 다른 출처이다. |
 | --- | --- |
-| http://example.com
-http://www.example.com
-http://myapp.example.com | Host가 전부 다 다르기 때문에 다른 출처이다. |
-| http://example.com
-http://example.com:8080 | Port 번호가 다르기 때문에 다른 출처이다. |
+http://example.com <br/> http://www.example.com <br/> http://myapp.example.com | Host가 전부 다 다르기 때문에 다른 출처이다. |
+http://example.com:8080 <br/> http://example.com| Port 번호가 다르기 때문에 다른 출처이다. |
 
 - 이렇게 다른 출처 요청일 경우에는 CORS 정책에 준수하여 Request해야만 정상적으로 응답을 받는다.
 
