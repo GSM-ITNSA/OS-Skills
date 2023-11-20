@@ -16,6 +16,58 @@
 - Entry 정보 참조는 RDN이나 DN을 사용해서 정보를 얻어올 수 있다.
 - 각각의 엔트리는 다수의 속성을 갖는다.
 
+
+### LDAP의 구성 요소를 4가지 모델로 나누어 설명하겠습니다.
+---
+### 1) Information 모델
+- 데이터의 형태와 데이터를 통해 디렉토리 구조로 정보를 장하는 방식에 관한 것이다.
+- LDAP 디렉토리에서 표현하는 정보 구조는 2가지 요소로 이뤄진다.
+    ```
+    Entry : 디렉터리에서 정보를 표현하는 기본 단위. Entry는 다수의 Attribute로 구성됨
+    Attribute : Entry의 각 타입을 저장하는 공간이다.
+    ```
+- LDAP 디렉토리 구조는 Entry 데이터들을 트리 구조로 형성, 관리한다
+    - 이러한 트리 형태의 구조를 DIT라고 함
+
+<img src="./Image/LDAP_InformationModel.png" width="400">
+
+- LDAP 디렉토리에서 데이터를 구성하는데 중요한 개념인 ObjectClass와 Schema가 있다.
+    - `ObjectClass`는 Entry에서 꼭 필요하거나 가질 수 있는 Attribute 타입을 정의한다.
+    - 또한 ObjectClass는 다른 ObjectClass를 상속해 구현하며 개념을 확장할 수 있다.
+
+    - `Schema`는 ObjectClass와 Attribute에 대해 정의하는 규칙
+    - ObjectClass에 어떤 Attribute가 들어갈지 정의할 수 있다.
+    - Attribute의 값에 대한 제약 및 조건 등 관련된 규칙들을 정의할 수 있다.
+    - Schema 정의를 통해 여러 응용 프로그램에서 디렉토리 서비스를 읽고 사용할 때 상호 운용성을 보호해주는 역할을 한다.
+
+### 2) Naming 모델
+- LDAP 디렉터리 구조에서 각 Entry를 어떻게 식별하고 구성하는지에 대해 설명
+- Entry는 여러 자식 Entry들을 가지는 형태의 트리 구조로 나타나게 된다.
+- 각 Entry 계층에서는 해당 계층을 나타내는 고유한 주소 Attribute를 지니는데 이를 RDN이라고 부른다.
+- 경로 내 RDN값들을 이어 붙여 생성된 고유한 문자를 DN이라고 부른다.
+- LDAP의 DIT 형태에서 가장 위에 존재하는 Entry는 DIT의 시작점, 데이터 트리의 루트로 보며 하나의 데이터셋으로 이해할 수 있다.
+
+### 3) Functional 모델
+- LDAP 디렉토리에서 작업하는 명령을 다룬다.
+- 8가지의 작업 명령을 보통 나누게 되고 작업 명령의 기능에 따라 3가지로 구분한다.
+#### 질문작업
+- Search : 주어진 조건에 맞는 Entry 도출
+- Compare : 특정 Entry 의 Attribute 값 비교
+#### 갱신작업
+- Add : 디렉토리에 신규 Entry 추가
+- Delete : 디렉토리에 기존 Entry 삭제
+- Modify : 디렉토리에 기존 Entry 수정 및 Entry DN 값 변경
+#### 인증작업
+- Bind : 디렉토리 서버 연결 시 사용자 인증
+- Unbind : 디렉토리 서버와의 연결 해제
+- Abandon : 이전 요청 명령을 취소
+
+### 4) Security 모델
+- 디렉토리에 접근하는 사용자 인증과 데이터 접근 권한을 통해 서비스를 보호하는 방식에 대해 설명
+- SSL/TLS 인증 방식을 통해 서버-클라이언트 간 연결을 구성할 수 있다
+- 데이터 전송 시 바이너리 암호화를 적용해 정보를 보호한다.
+
+
 ## 주요 용어
 1. DN (Distinguish Name) :
     ```
@@ -29,6 +81,7 @@
    ```
    DN 의 상대적인 부분으로서, 특정 항목을 다른 항목과 구별하는 데 사용되는 일부이며,
    DN 의 각 구성 요소를 RDN 이라고 한다.
+   특정 항목의 위치를 식별하기 위한 부분이다.
    ```
 
 3. DIT (Directory Information Tree) :
