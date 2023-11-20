@@ -117,3 +117,71 @@ Stateless의 한계
 
 - HTTP 1.0에서는 각각의 자원을 다운로드 하기 위해 연결과 종료를 반복해야 했다.
 - 하지만 HTTP1.1부터는 지속 연결이 가능해졌다
+---
+## 실제 HTTP의 동작 과정
+
+- 위에서 HTTP는 `Stateless`한 프로토콜인 것을 알아보았다.
+- 즉, 각 요청은 독립적이며 Client가 Server에게 요청하기 전에 Connect 하는 과정이 필요하다.
+- Client는 Server의 응답을 받으면 종료(Close)하게 된다.
+
+```markdown
+시나리오 
+
+#  1. 사용자가 www.google.com URL을 Web Browser에 입력하였다.
+#  2. 사용자가 https://www.google.com URL을 Web Browser에 입력하였다.
+
+이 때 HTTP 패킷은 어떻게 동작할까 ?
+```
+
+---
+
+1. **사용자가 Web Browser에 URL 주소를 입력한다.** 
+
+<img src="./Image/Web51.png" alt="Alt123" width="300">
+
+
+2. **DNS Server가 Web Server의 Domain 이름에 대한 IP를 알아와 준다.** 
+3. **[www.google.com](http://www.google.com) Server와 TCP 연결을 시도한다.** 
+    - 3-way Handshaking : Client와 Server 간 신뢰성 있는 연결을 위한 3번의 Packet 교환
+4. **Server에게 Get Method를 사용하여 Client는 자신이 원하는 Resource를 요청한다.** 
+
+```markdown
+예시
+
+GET /index.html HTTP/1.1		-> 요청문
+Host : www.google.com			-> 헤더
+```
+
+5. **Server는 Client로부터 받은 Get Request Message에 대한 Response를 만들어 Client에게 보낸다.**
+
+```markdown
+예시
+
+HTTP/1.1 200 OK					           -> 상태문
+
+Date: Thu, 12 Feb 2009 06:29:38 GMT 	            -> 헤더 시작
+Server: Apache/1.3.29 (Unix) PHP/4.3.4RC3 
+X-Powered-By: PHP/4.3.4RC3 
+Transfer-Encoding: chunked 
+Content-Type: text/html				           -> 헤더 끝
+
+<HTML>							          -> body
+<HEAD>
+<TITLE> test </TITLE>
+</HEAD>
+...생략...
+```
+
+6. **Server와 Client가 서로 원하는 Data를 주고 받았으면 연결을 해제하는 과정을 거친다.** 
+    - 4-way Handshaking : 서버와 클라이언트 양쪽 다 연결이 종료 시킨다는 메시지를 보낸다.
+    - (양쪽 다 각각이므로 4번의 Packet 교환이 일어남)
+7. **Web Browser가 Response Message의 Body 내용을 Client에게 보여준다.** 
+
+---
+
+- HTTPS도 다 똑같지만 3-way Handshaking을 거치고 TLS Handshaking을 거친다.
+- 그 후 Data는 TLS Handshaking으로 생성된 Session Key로 암호화가 되어 통신하게 된다.
+
+```markdown
+자세한건 HTTPS 문서를 참조하길 바란다.
+```
