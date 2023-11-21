@@ -67,6 +67,11 @@ Second DC (Child DC) : busan.korea.com
 
 **포레스트**는 하나 이상의 Tree의 집합이다. 
 
+Forest 안에 여러 Tree가 들어 갈 수 있다.
+
+- 이건 무슨 말이냐면 …
+    - **Forest 안에 [korea.com](http://korea.com) 과 [skill.com](http://skill.com) 같이 다른 도메인이 속할 수 있다는 것이다 !**
+
 - Forest를 만드는 이유는 Tree의  확장이다.
 
 <img src="./Image/AD4.png" alt="Alt123" width="600">
@@ -114,8 +119,6 @@ GC는 중앙에 정보를 저장하는 일종의 저장소이다.
 - Site 별로 GC를 두면 Traffic을 분산 시키는 효과를 준다.
 
 ---
-
-## Forest Trust
 
 ### Trust란 ?
 
