@@ -38,6 +38,11 @@
 - 이런 경우 Client가 Server에 직접 접근이 불가능하므로, Reverse Proxy에서 요청을 적극적으로 중계하는 Load Balancing의 역할을 수행하기도 한다.
 - 서버를 감추는 효과가 있다.
 
+### 3. 투명 프록시 (transparent Proxy)
+- 투명 프록시 (Transparent Proxy)
+- 사용자들이 transparent Proxy를 사용하고 있다는 사실 자체를 모르는 경우가 많음
+- 일반적으로 transparent Proxy는 회사가 기기 사용자의 올나인 활동을 모니터링하고 특정 웹사이트에 접근하지 못하도록 차단하고 싶은 경우에 사용되며 호텔과 카페는 해당 프록시를 통해 공용 와이파이에서 사용자를 인증하고 엑세스 권한을 허용
+
 ## Proxy Server 종류
 
 ### 1. HTTP Proxy 
@@ -48,10 +53,6 @@
 - 웹페이지뿐만 아니라 응용프로그램에서도 사용할 수 있는 프록시
 - SOCKS Proxy는 모든 종류의 트래픽을 처리할 수 있지만 보통 HTTP Proxy보다 연결 속도가 느리고 로딩 시간이 더 오래 걸림
 
-### 3. transparent Proxy
-- 투명 프록시 (Transparent Proxy)
-- 사용자들이 transparent Proxy를 사용하고 있다는 사실 자체를 모르는 경우가 많음
-- 일반적으로 transparent Proxy는 회사가 기기 사용자의 올나인 활동을 모니터링하고 특정 웹사이트에 접근하지 못하도록 차단하고 싶은 경우에 사용되며 호텔과 카페는 해당 프록시를 통해 공용 와이파이에서 사용자를 인증하고 엑세스 권한을 허용
 
 ## 프록시 서버를 사용하는 이유
 
