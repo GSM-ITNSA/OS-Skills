@@ -224,6 +224,9 @@ Message-Digest Algorithms 5
 ### SHA-1
 ```
 Secure Hash Algorithms 1은 160비트의 해시 값을 생성하는 알고리즘
+SHA-0을 변형한 SHA 함수들 중 하나이며, 1995년 발표되었다.
+
+MD5 해시 함수에서 사용했던 것과 비슷한 방법을 사용한다.
 
 충돌공격에 취약하다는 단점이 있음.
 ```
@@ -235,7 +238,8 @@ SHA-256이 가장 널리 사용되며, 안전한 해시 함수로 여겨진다.
 ```
 ### SHA-3
 ```
-Secure Hash Algorithms 3 은 NIST(National Institute of Standards and Technology, 미국 측정 기관)에 의해 채택된 해시 함수로, Keccak 알고리즘을 기반으로 한다.
+Secure Hash Algorithms 3은 Keccak 알고리즘을 기반으로 하는 해시 함수이다.
 
 SHA-2 와는 완전히 다른 구조를 가지며, 높은 수준의 보안성을 제공한다.
 ```
+<img src="./Images/Encryption_Algorithms_SHA.png" width="700">
