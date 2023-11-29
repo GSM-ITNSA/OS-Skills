@@ -221,3 +221,98 @@ gpedit.msc
 ```powershell
 rsop.msc 
 ```
+
+---
+
+## Group Policy 와 Active Directory의 관계
+
+### Active Directory
+
+**Active Directory**는 사용자와 **Group 정보를 중앙 화 하여 관리**한다. 또한, 사용자 및 Resource 정보를 관리하는 Directory Service 이다. 
+
+### Group Policy
+
+**Group Policy**는 Active Directory가 관리하는 사용자와 Group에 정책을 적용하여 통합 적으로 제어한다.
+
+즉, Group Policy는 Active Directory에 의존적으로 동작하며, GPO는 Active Directory 내에서 설정되어 있다.  GPO는 Active Directory Container에 연결 되어 있지 않으면 아무런 효능을 볼 수 없다. 
+
+---
+
+## GPO 구조
+
+**GPO(Group Policy Objects)**는 **GPC(Group Policy Container)**와 **GPT(Group Policy Template)**로           구성 되어있다.
+
+### `GPC (Group Policy Container)`
+
+GPC는 Group Policy 설정을 저장하는 Directory 구조이다.
+
+Active Directory에 저장되어있고, Group Policy의 사용자와 컴퓨터 노드와 관련된 특정 정보 (Group Policy 이름, GPT 위치, Group Policy을 처리하기 위한 CSE 목록 등)를 담고 있다. 
+
+### 주요 특징 및 역할
+
+1. **Group Policy 저장** 
+    - GPC는 Domain 및 OU의 Group Policy 설정을 저장한다.
+    - 이 설정은 사용자 및 컴퓨터 개체에 적요된다.
+2. **정책 구성 정보** 
+    - GPC는 정책 구성 정보를 가지고 있으며, 해당 정보는 Client에게 적용되어 시스템 및 환경을 구성하는 데 사용된다.
+3. **동기화** 
+    - 여러 Domain Controller 간의 GPC 정보가 동기화 된다. 이를 통해 Domain 내에서의       Group Policy의 일관성을 책임진다.
+
+  <img src="./Image/GP9.png" alt="Alt123" width="600">
+
+### `GPT(Group Policy Template)`
+
+GPT는 SYSVOL 공유 폴더 하위에 저장되어 있으며 실제로 적용될 정책 내용을 담고 있다. 
+
+- SYSVOL 경로 : %windir%\SYSVOL\sysvol
+
+  <img src="./Image/GP10.png" alt="Alt123" width="600">
+
+각 GUID 폴더는 하나의 정책과 연결되며, Machine, User 폴더와 GPT.INI 파일을 포함하고 있다. 
+
+  <img src="./Image/GP11.png" alt="Alt123" width="600">
+
+
+- Machine : Group Policy의 컴퓨터 관련 설정
+- User : Group Policy의 사용자 관련 설정
+- GPT.INI : Group Policy의 구성 설정
+
+  <img src="./Image/GP12.png" alt="Alt123" width="600">
+
+
+- Version은 GPO가 변경될 때마다 Update 된다.
+- displayname : 관리자 생성한 모든 GPO에는 “새 그룹 정책 개체”라는 이름이 들어가 있음.
+    - gpmc에서 표시되는 이름과는 다르다.
+
+---
+
+## Group Policy 배포
+
+Active Directory 서버에서 AD DS 기능을 추가하고 구성할 때, 명시하지는 않았지만 System             내부적으로 생기는 공유 폴더, **SYSVOL** 이라는 **Folder**가 자동으로 생긴다.
+
+Group Policy가 적용되어 배포될 때, SYSVOL 이라는 Folder에 `.inf` 형태로 저장이 된다.
+
+또한 AD내에 속한 구성원들은 **Booting** 시에 **SYSVOL**에서 배포된 Group Policy를 가져다가 사용한다.
+
+- 컴퓨터 정책 : 재 부팅 시 변경 사항 적용
+- 사용자 정책 : 재 로그인 시 변경 사항 적용
+- (또한 gpupdate /force 명령어를 사용하여 강제로 Update 할 수 있음.)
+
+또한 batch 파일 .bat 파일을 배포할 때에도 SYSVOL 폴더를 사용한다. 
+
+### 실질적인 배포 과정
+
+1. **정책 설정 및 편집**
+    - 먼저 사용할 Group Policy를 설정하거나 편집한다.
+2. **Active Directory에 배포** 
+    - 위에서 설정한 Group Policy는 GPO에 저장된다.
+    - 이러한 정책은 Active Directory의 특정 Container에게 영향을 줄 수 있다.
+3. **SYSVOL 폴더에 저장**
+    - Active Directory GPO에 설정된 정보는 SYSVOL 폴더에 저장된다.
+    - SYSVOL 폴더는 DC간 정보를 동기화 하는데 사용되는 공유 폴더이다.
+4. **DFS 활용** 
+    - DFS Replication을 사용하여 SYSVOL의 동기화를 설정한다.
+    - 이렇게 되면 도메인 내의 모든 Domain Controller간에 동일한 Group Policy가 유지된다.
+5. **정책 적용**
+    - 컴퓨터 정책 또는 사용자 정책을 적용할 시 SYSVOL 폴더에서 가져와 Client에게 적용한다.
+    - 이를 통해 Group Policy가 Domain 내의 모든 관리 대상에게 배포가 된다.
