@@ -139,8 +139,8 @@ Domain간 또는 Forest 간에 설정한 관계이다.
 
 말 그대로 한쪽에서 한쪽으로 인증 경로가 형성이 되어있는 관계이다. 
 
-- A → B Resource Access 가능
-- B → A Resource Access 불가능
+- A → B Resource Access 불가능
+- B → A Resource Access 가능
 
 ### 양방향 Trust (Two Way Trust)
 
@@ -149,7 +149,7 @@ Domain간 또는 Forest 간에 설정한 관계이다.
 즉, 양쪽에서 모두 Resource에 대한 접근이 가능하다는 것이다 ! 
 
 - A → B Resource Access 가능
-- B → A Resource Access 불가능
+- B → A Resource Access 가능
 
 ### 전이적 Trust
 
