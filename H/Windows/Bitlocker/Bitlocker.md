@@ -131,3 +131,86 @@ TPM에 시작 키를 구성하는 경우의 Bitlocker 암호 해독 과정에 �
 1. 암호화 작업 시 오래 걸린다. 
 2. Microsoft Windows에서만 적용이 되기 때문에 다른 OS를 사용하는 경우 Bitlocker를 사용할 수 없다. 
 3. 암호를 잊어버리면 진짜 끝장이다. 물론 복구 키를 따로 제공하지만, 이것도 잊어버리면 대책이 없다.
+
+---
+
+## Bitlocker Network Unlock 🔒
+
+Bitlocker Network Unlock은 Disk 암호화 기술 중 하나 이다. 
+
+하지만 이 기술은, 특정 Network에서만 Computer를 Booting하도록 허용하는 기술이다. 
+
+```markdown
+Bitlocker 암호화를 사용하면 Computer는 부팅 시 Bitlocker PIN, PW 또는 USB Key 등의 인증 요소를 필요로 한다.
+
+하지만 Bitlocker Network Unlock을 사용하면 특정 조건이 충족되어야만 Computer가 Booting 된다.
+```
+
+### System 요구 사항
+
+Network Unlock 기능으로 Domain에 가입된 System을 자동으로 Booting 되게 하기 위해서는               필수 `Software & Hardware` 요구 사항을 충족 해야 한다.
+
+**요구 사항은 다음과 같다.**
+
+1. Network Unlock Client 역할을 할 수 있는 UEFI DHCP 드라이버가 포함된 상태를 지원하는 OS
+2. Network Unlock Client는 TPM 칩과 하나 이상의 TPM 보호기가 있어야 한다. 
+3. 지원되는 OS에서 WDS (Windows 배포 서비스) 역할을 실행하는 Server가 있어야 한다. 
+4. 지원되는 모든 Server OS에 설치된 Bitlocker Network Unlock 옵션 기능이 구성되어 있어야 한다.
+5. WDS 서버와 별도의 DHCP Server가 존재해야 한다.
+6. 공개/개인 Key Pair가 올바르게 구성되어 있어야 한다. 
+7. Network Unlock Group Policy가 올바르게 구성 되어 있어야 한다. 
+8. Client 장치의 UEFI 펌웨어에서 Network Stack (Network와 관련된 SW & HW) 이 활성화 상태.
+
+### 주의 할 점!
+
+Bitlocker Network Unlock 이 안정적으로 작동하기 위해서는 Device의 **첫 번째 Network 어댑터**가 **DHCP를 지원하도록 구성**되어 있어야 한다.
+
+- Network Unlock은 이 첫 번째 Network 어댑터를 사용한다.
+- Device에 여러 어댑터가 있을 수 있고 DHCP 없이 정적으로 구성할 수 있기 때문에 특히 주의 해야한다.
+- 어떤 이유든 간에 DHCP Port 오류가 있는 Adapter에 도달하면 Network Unlock이 Adapter 열거를 중지하게 된다.
+
+> 그렇기 때문에 ..
+> 
+> 1. 첫 번째 Network Adapter가 DHCP를 지원하지 않을 경우
+> 2.  Network에 연결되어 있지 않을 경우
+> 3. DHCP Port의 가용성을 지원하지 않을 경우
+> 
+> 에는 Network Unlock이 실패 하게 된다.
+> 
+
+## Bitlocker Network Unlock 구성요소
+
+Bitlocker Network Unlock을 사용하려면 아래와 같은 Package를 설치해야한다. 
+
+```powershell
+Install-Windowsfeature Bitlocker-NetworkUnlock -IncludeManagementTools
+```
+
+또한 이 기술을 사용하려면 환경에 WDS - Windows 배포 서비스가 필요하다. 
+
+- WDS 구성은 필요하지 않지만 Service는 실행 되고 있어야 한다.
+
+```powershell
+Install-Windowsfeature WDS-Deployment -IncludeManagementTools
+```
+
+## Network Unlock Process 순서
+
+Network Unlock Process는 다음 단계를 따라 Network Unlock 부팅을 진행한다. 
+
+<img src="./Image/Bitlocker10.png" alt="Alt123" width="400">
+
+
+1. Windows Boot Manager는 Bitlocker 구성에서 Network Unlock 보호기를 감지한다. 
+2. Client의 Computer는 UEFI의 DHCP 드라이버를 활용하여 IPv4 주소를 받아온다. 
+3. Client는 Network 중간 Key 요청과 응답을 위한 AES-256 Session Key를 포함한 DHCP 요청을 Broadcast 함   
+    - Network 중간 Key는 WDS Server의 Network Unlock 인증서의 RSA 공개 Key로 암호화 된다.
+    - `Network 중간 Key` : BItlocker로 암호화 되어 있는 Disk를 Unlock 하는 Key이다. 이 Key는 WDS Server로부터 전달 되며 안전하게 전달 하기 위해 RSA 공개 Key로 암호화 한다.
+    - `AES-256 Session Key` : Client와 WDS Server와 통신을 할 때 암호화를 해주는 Key이다.
+    - ( DHCP 요청은 WDS 인증서의 공개 Key를 통해서 암호화 된다.)
+4. WDS Server는 Client의 요청을 인식한다. 
+5. WDS Server는 Bitlocker Network Unlock 인증서의 개인 Key 통해 요청을 복호화 한다. 
+6. WDS Server는 DHCP 응답을 사용하여 Session Key로 암호화된 Network Key를 암호화 하여 Client에게 반환한다. 이 Key가 바로 중간 Key 이다. 
+7. 이렇게 반환된 중간 Key는 TPM Key와 조합되어서 TPM 으로만 해독할 수 있는 Key가 된다.
+8. 이 결합된 Key는 Volume 잠금을 해독하는 AES-256 Key로 만들어진다. 
+9. Windows가 Booting을 계속 한다.
